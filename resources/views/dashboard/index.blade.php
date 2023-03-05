@@ -10,14 +10,54 @@
 
     <div class="pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Hello, {{ auth()->user()->name }}</h1>
-        <h4>This is ongoing auctions list</h4>
     </div>
 
     {{-- <form action="" class="mb-2">
       <input type="text" name="search" class="py-1 px-5">
       <button class="btn btn-dark" type="submit">Search</button>
     </form> --}}
+    
+    <h4>These are our web's brief data</h4>
+    <div class="row mb-3">
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-3">Current Auctions: {{ $countAuction }}</h5>
+            {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
+            <a href="#" class="btn btn-dark float-end">Go to Auction List</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-3">Items: {{ $countItem }}</h5>
+            {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
+            <a href="/dashboard/items" class="btn btn-dark float-end">Go to Item List</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-3">Categories: {{ $countCategory }}</h5>
+            {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
+            <a href="/dashboard/categories" class="btn btn-dark float-end">Go to Category List</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-3">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title pb-3">Staffs: {{ $countStaff }}</h5>
+            {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
+            <a href="/dashboard/staff" class="btn btn-dark float-end">Go to Staff List</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <h4>This is ongoing auctions list</h4>
     <div class="table-responsive col-lg-12">
       {{-- <a href="/dashboard/categories/create" class="btn btn-dark mb-3 py-2">Create new category</a> --}}
       <table class="table table-striped table-sm">

@@ -35,7 +35,7 @@
 
 </form>
 
-    <div class="table-responsive col-lg-7">
+    <div class="table-responsive col-lg-12">
         {{-- <a href="/dashboard/categories/create" class="btn btn-dark mb-3 py-2">Create new category</a> --}}
         <table class="table table-striped table-sm">
           <thead>

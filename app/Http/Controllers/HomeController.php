@@ -62,8 +62,6 @@ class HomeController extends Controller{
                     'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')
                 ]);
             }
-
-
     }
     
     public function edit(Item $item){

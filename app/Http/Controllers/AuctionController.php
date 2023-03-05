@@ -81,7 +81,7 @@ class AuctionController extends Controller{
             return redirect()->route('item_detail', ['item' => $item])->with('success', 'Open success');
     }
 
-    public function deleteAuction(Auction $auction, Item $item){
+    public function deleteAuction(Item $item){
         Auction::destroy($item->auction->id);
         return redirect('/dashboard')->with('success', 'An auction has been deleted');
     }

@@ -11,8 +11,11 @@
   <div class="mt-4">
     <h3 class="mb-3">Staff List</h3>
     <hr>
+    @can('admin')
       <a href="/dashboard/staff/create" class="btn btn-dark mb-3">Tambah Petugas</a>
-        <div class="table-responsive col-lg-9">
+    @endcan
+    
+        <div class="table-responsive col-lg-12">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
@@ -21,7 +24,9 @@
               <th scope="col">Email</th>
               <th scope="col">Phone Number</th>
               <th scope="col">Role</th>
-              <th scope="col">Action</th>
+              @can('admin')
+                <th scope="col">Action</th>
+              @endcan
             </tr>
           </thead>
           <tbody>
@@ -34,15 +39,17 @@
                 <td>{{ $staff->email }}</td>
                 <td>{{ $staff->phone_number }}</td>
                 <td>{{ $staff->role }}</td>
-                <td>
-                    <a href="/dashboard/staff/{{ $staff->username}}" class="btn btn-success">Detail</a> 
-                    <a href="/dashboard/staff/{{ $staff->username}}/edit" class="btn btn-warning">Edit</a>
-                    <form action="/dashboard/staff/{{ $staff->username}}" method="post" class="d-inline">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                    </form>
-                </td>
+                @can('admin')
+                  <td>
+                      <a href="/dashboard/staff/{{ $staff->username}}" class="btn btn-success">Detail</a> 
+                      <a href="/dashboard/staff/{{ $staff->username}}/edit" class="btn btn-warning">Edit</a>
+                      <form action="/dashboard/staff/{{ $staff->username}}" method="post" class="d-inline">
+                          @csrf
+                          @method('delete')
+                          <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                      </form>
+                  </td>
+                @endcan
             </tr>
 
             @endforeach

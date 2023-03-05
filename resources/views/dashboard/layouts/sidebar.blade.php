@@ -28,15 +28,14 @@
                 Category List
               </a>
             </li>
-            @can('admin')
+            {{-- @can('admin') --}}
             <li class="nav-item">
               <a class="nav-link {{ Request::is('add-petugas') ? 'active' : ''}}" aria-current="page" href="/dashboard/staff">
-                <span data-feather="sidebar" class="align-text-bottom"></span>
-                Daftar Staf
-                <li><a href=""><i class="bi bi-facebook"></i></a></li>
+                <i class="bi bi-person"></i>
+                Staff List
               </a>
             </li>
-            @endcan
+            {{-- @endcan --}}
 
           </ul>
 

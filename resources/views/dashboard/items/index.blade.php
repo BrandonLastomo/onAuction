@@ -12,7 +12,7 @@
     <h3 class="mb-3">Items List</h3>
     <hr>
       <a href="/dashboard/items/create" class="btn btn-dark mb-3">Add new item</a>
-        <div class="table-responsive col-lg-10">
+        <div class="table-responsive col-lg-12">
         <table class="table table-striped table-sm">
           <thead>
             <tr>

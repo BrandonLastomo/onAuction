@@ -7,6 +7,7 @@ use App\Models\Auction;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\AuctionHistory;
+use App\Models\Category;
 use Carbon\Carbon;
 
 class DashboardController extends Controller{
@@ -17,7 +18,11 @@ class DashboardController extends Controller{
 
         return view('dashboard.index', [
             'title' => "Dashboard",
-            'auctions' => Auction::all()->load('item', 'user')
+            'auctions' => Auction::all()->load('item', 'user'),
+            'countAuction' => Auction::all()->load('item', 'user')->count(),
+            'countItem' => Item::all()->count(),
+            'countCategory' => Category::all()->count(),
+            'countStaff' => User::where('role', 'admin')->orWhere('role', 'petugas')->count()
         ]);
     }
 
