@@ -50,7 +50,7 @@ class AuctionController extends Controller{
         
     }
 
-    public function bidStore(Request $request, Item $item, AuctionHistory $history){
+    public function bidStore(Request $request, Item $item){
             $newBid = $request->validate([
                 'auction_id' => 'required',
                 'user_id' => 'required',
@@ -79,5 +79,10 @@ class AuctionController extends Controller{
             }
             
             return redirect()->route('item_detail', ['item' => $item])->with('success', 'Open success');
+    }
+
+    public function deleteAuction(Auction $auction, Item $item){
+        Auction::destroy($item->auction->id);
+        return redirect('/dashboard')->with('success', 'An auction has been deleted');
     }
 }

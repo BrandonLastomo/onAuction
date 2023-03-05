@@ -55,9 +55,8 @@
                   @endif
                   </form>
                   <a href="/dashboard/{{ $auction->item->slug }}" class="btn btn-success">Detail</a>
-                  <form action="/dashboard/{{ $auction->item->slug }}" method="post" class="d-inline">
+                  <form action="/dashboard/{{ $auction->item->slug }}/deleteAuction" method="GET" class="d-inline">
                       @csrf
-                      @method('delete')
                       <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                   </form>
               </td>

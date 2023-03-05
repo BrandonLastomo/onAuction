@@ -43,6 +43,7 @@ Route::resource('/dashboard/staff', RegisterPetugasController::class);
 Route::resource('/dashboard/items', DashboardItemController::class);
 Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
 Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
+Route::get('/dashboard/{item:slug}/deleteAuction', [AuctionController::class, 'deleteAuction']);
 Route::resource('/dashboard/categories', DashboardCategoryController::class);
 Route::get('/dashboard/{item:slug}', [DashboardController::class, 'show']);
 
