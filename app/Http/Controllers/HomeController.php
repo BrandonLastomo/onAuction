@@ -78,16 +78,28 @@ class HomeController extends Controller{
             'active' => 'mybid',
             'auctionsOpen' => Auction::where('user_id', Auth::user()->id)->where('status', 'Open')->get()->load('user'),
             'auctionHistoriesOpen' => collect(AuctionHistory::where('user_id', Auth::user()->id)->whereHas(
-                'auction', function($query){
-                                $query->where('status', '=', 'Open');
-                            })->get()->load('user', 'auction'))->unique('item_id'),
+                                        'auction', function($query){
+                                        $query->where('status', '=', 'Open');
+                                        })->get()->load('user', 'auction'))->sortByDesc('created_at')->unique('item_id'),
+            'countAuctionsOpen' => Auction::where('user_id', Auth::user()->id)->where('status', 'Open')->get()->count(),
+            'countAuctionHistoriesOpen' => collect(AuctionHistory::where('user_id', Auth::user()->id)->whereHas(
+                                        'auction', function($query){
+                                        $query->where('status', '=', 'Open');
+                                        })->get()->load('user', 'auction'))->unique('item_id')->count(),
+
             'auctionsClosed' => Auction::where('user_id', Auth::user()->id)->where('status', 'Closed')->get()->load('user'),
             'auctionHistoriesClosed' => collect(AuctionHistory::where('user_id', Auth::user()->id)->whereHas(
                                             'auction', function($query){
                                                 $query->where('status', '=', 'Closed');
-                                            })->get()->load('user', 'auction'))->unique('item_id')->whereNotIn('item_id', [$auction->item_id]),
-            'countAuctions' => Auction::where('user_id', Auth::user()->id)->count(),
-            'countAuctionHistories' => AuctionHistory::where('user_id', Auth::user()->id)->count()
+                                            })->get()->load('user', 'auction'))->sortByDesc('created_at')->unique('item_id')->whereNotIn('item_id', [$auction->item_id]),
+            'countAuctionsClosed' => Auction::where('user_id', Auth::user()->id)->where('status', 'Closed')->get()->count(),
+            'countAuctionHistoriesClosed' => collect(AuctionHistory::where('user_id', Auth::user()->id)->whereHas(
+                                            'auction', function($query){
+                                                $query->where('status', '=', 'Closed');
+                                            })->get()->load('user', 'auction'))->unique('item_id')->whereNotIn('item_id', [$auction->item_id])->count(),
+            
+            //                                 'countAuctions' => Auction::where('user_id', Auth::user()->id)->count(),
+            // 'countAuctionHistories' => AuctionHistory::where('user_id', Auth::user()->id)->count()
         ]);
     }
 

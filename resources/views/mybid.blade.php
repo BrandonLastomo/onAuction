@@ -5,7 +5,7 @@
 
 <div class="container mb-5">
 
-    <h4>This Is Your Latest Auction, {{ Auth::user()->name }}</h4>
+    <h4>Your Latest Auction</h4>
     <div class="table-responsive mb-3">
         <table class="table border table-sm">
             <thead class="table-dark">
@@ -17,9 +17,9 @@
                 </tr>
             </thead>
             <tbody>
-                {{-- {{ $countAuctionHistories }}    --}}
+                {{ $countAuctionsOpen }}   
                 {{-- @if ($countAuctions > 0 OR $countAuctionHistories > 0 ) --}}
-                @if ($countAuctions > 0)
+                @if ($countAuctionsOpen > 0)
                     @foreach ($auctionsOpen as $auction)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -30,7 +30,7 @@
                             </td>
                         </tr>
                     @endforeach
-                @elseif ($countAuctionHistories > 0)
+                @elseif ($countAuctionHistoriesOpen > 0)
                     {{-- @if ($auctions->status == 'Open') --}}
                         @foreach ($auctionHistoriesOpen as $history)
                             <tr>
@@ -65,7 +65,7 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($countAuctions > 0 OR $countAuctionHistories > 0)
+                @if ($countAuctionsClosed > 0 OR $countAuctionHistoriesClosed > 0)
                 {{-- @if ($countAuctions > 0) --}}
                     @foreach ($auctionsClosed as $auction)
                         <tr>
