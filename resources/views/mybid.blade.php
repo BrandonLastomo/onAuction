@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                {{ $countAuctionsOpen }}   
+                {{-- {{ $countAuctionsOpen }}    --}}
                 {{-- @if ($countAuctions > 0 OR $countAuctionHistories > 0 ) --}}
                 @if ($countAuctionsOpen > 0)
                     @foreach ($auctionsOpen as $auction)
@@ -34,7 +34,7 @@
                     {{-- @if ($auctions->status == 'Open') --}}
                         @foreach ($auctionHistoriesOpen as $history)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration+1 }}</td>
                                 <td>{{ $history->auction->item->name}}</td>
                                 <td>{{ $history->bid_amount}}</td>
                                 <td>
@@ -45,7 +45,7 @@
                     {{-- @endif --}}
                 @else
                     <tr>
-                        <td>You haven't done any bid yet.</td>
+                        <td>You are not in any auction right now.</td>
                     </tr>
                 @endif
             </tbody>
@@ -55,7 +55,7 @@
 
     <h4>Bid History</h4>
     <div class="table-responsive">
-        <table class="table border">
+        <table class="table border table-sm">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">No.</th>
@@ -65,6 +65,7 @@
                 </tr>
             </thead>
             <tbody>
+                {{ $countAuctionsClosed }}   
                 @if ($countAuctionsClosed > 0 OR $countAuctionHistoriesClosed > 0)
                 {{-- @if ($countAuctions > 0) --}}
                     @foreach ($auctionsClosed as $auction)
@@ -82,7 +83,7 @@
                     {{-- @if ($auctions->status == 'Open') --}}
                         @foreach ($auctionHistoriesClosed as $history)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration+1 }}</td>
                                 <td>{{ $history->auction->item->name}}</td>
                                 <td>{{ $history->bid_amount}}</td>
                                 <td>
