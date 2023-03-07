@@ -72,11 +72,22 @@ class HomeController extends Controller{
         ]);
     }
 
-    public function mybid(){
+    public function mybid(Auction $auction){
         return view('mybid', [
             'title' => "Your Bid",
             'active' => 'mybid',
-            'auctions' => Auction::where('user_id', Auth::user()->id)->get()->load('user'),
+            'auctionsOpen' => Auction::where('user_id', Auth::user()->id)->where('status', 'Open')->get()->load('user'),
+            'auctionHistoriesOpen' => collect(AuctionHistory::where('user_id', Auth::user()->id)->whereHas(
+                'auction', function($query){
+                                $query->where('status', '=', 'Open');
+                            })->get()->load('user', 'auction'))->unique('item_id'),
+            'auctionsClosed' => Auction::where('user_id', Auth::user()->id)->where('status', 'Closed')->get()->load('user'),
+            'auctionHistoriesClosed' => collect(AuctionHistory::where('user_id', Auth::user()->id)->whereHas(
+                                            'auction', function($query){
+                                                $query->where('status', '=', 'Closed');
+                                            })->get()->load('user', 'auction'))->unique('item_id')->whereNotIn('item_id', [$auction->item_id]),
+            'countAuctions' => Auction::where('user_id', Auth::user()->id)->count(),
+            'countAuctionHistories' => AuctionHistory::where('user_id', Auth::user()->id)->count()
         ]);
     }
 

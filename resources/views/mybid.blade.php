@@ -5,29 +5,49 @@
 
 <div class="container mb-5">
 
-    <h4>Your Latest Auction</h4>
-    <div class="table-responsive">
-        <table class="table border">
+    <h4>This Is Your Latest Auction, {{ Auth::user()->name }}</h4>
+    <div class="table-responsive mb-3">
+        <table class="table border table-sm">
             <thead class="table-dark">
                 <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Name</th>
-                <th scope="col">Amount of Bid</th>
-                <th scope="col">Action</th>
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount of Bid</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($auctions as $auction)
+                {{-- {{ $countAuctionHistories }}    --}}
+                {{-- @if ($countAuctions > 0 OR $countAuctionHistories > 0 ) --}}
+                @if ($countAuctions > 0)
+                    @foreach ($auctionsOpen as $auction)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $auction->item->name}}</td>
+                            <td>{{ $auction->sold_price}}</td>
+                            <td>
+                                <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @elseif ($countAuctionHistories > 0)
+                    {{-- @if ($auctions->status == 'Open') --}}
+                        @foreach ($auctionHistoriesOpen as $history)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $history->auction->item->name}}</td>
+                                <td>{{ $history->bid_amount}}</td>
+                                <td>
+                                    <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    {{-- @endif --}}
+                @else
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-                        <td>{{ $auction->item->name ?? 'No one has done any bid'}}</td>
-                        <td>{{ $auction->sold_price ?? ''}}</td>
-                        <td>
-                            <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
-                        </td>
+                        <td>You haven't done any bid yet.</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
     </div>
@@ -38,20 +58,45 @@
         <table class="table border">
             <thead class="table-dark">
                 <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Name</th>
-                <th scope="col">Amount of Bid</th>
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount of Bid</th>
+                    <th scope="col">Status</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($auctions as $auction)
+                @if ($countAuctions > 0 OR $countAuctionHistories > 0)
+                {{-- @if ($countAuctions > 0) --}}
+                    @foreach ($auctionsClosed as $auction)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $auction->item->name}}</td>
+                            <td>{{ $auction->sold_price}}</td>
+                            <td>
+                                {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
+                                <p>Win</p>
+                            </td>
+                        </tr>
+                    @endforeach
+                {{-- @elseif ($countAuctionHistories > 0) --}}
+                    {{-- @if ($auctions->status == 'Open') --}}
+                        @foreach ($auctionHistoriesClosed as $history)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $history->auction->item->name}}</td>
+                                <td>{{ $history->bid_amount}}</td>
+                                <td>
+                                    {{-- <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
+                                    <p>Lose</p>
+                                </td>
+                            </tr>
+                        @endforeach
+                    {{-- @endif --}}
+                @else
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-                        <td>{{ $auction->item->name ?? 'No one has done any bid'}}</td>
-                        <td>{{ $auction->sold_price ?? ''}}</td>
+                        <td>You haven't done any bid yet.</td>
                     </tr>
-                @endforeach
+                @endif
             </tbody>
         </table>
     </div>

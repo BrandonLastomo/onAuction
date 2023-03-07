@@ -48,9 +48,9 @@ Route::resource('/dashboard/categories', DashboardCategoryController::class);
 Route::get('/dashboard/{item:slug}', [DashboardController::class, 'show']);
 
 Route::get('/', [HomeController::class, "index"]);
-Route::get('/{item:slug}', [AuctionController::class, 'autoCloseAuction']);
 Route::get('/categories', [CategoryController::class, "index"]);
 Route::get('/categories/{category:slug}', [CategoryController::class, "categoryItems"]);
+Route::get('/{item:slug}', [AuctionController::class, 'autoCloseAuction']);
 Route::get('/{item:slug}', [HomeController::class, 'show'])->name('item_detail');
 Route::get('/{item:slug}/bidStore', [AuctionController::class, 'bidStore']);
 Route::get('/{item:slug}/generate-report', [HomeController::class, 'generateReport']);

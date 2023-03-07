@@ -54,9 +54,9 @@
           {{-- </a>
           <a href="/{{ $auctions[2]->item->slug }}"> --}}
             <div class="carousel-item">
-              <form action="/{{ $auctions[1]->item->slug }}" method="POST">
+              <form action="/{{ $auctions[2]->item->slug }}" method="POST">
                 @method('GET')
-                <input type="hidden" name="item_id" value="{{ $auctions[1]->item->id }}">
+                <input type="hidden" name="item_id" value="{{ $auctions[2]->item->id }}">
                   <button type="submit" class="border-0 p-0">
                     <img src="https://source.unsplash.com/1200x300?furniture" class="d-block w-100">
                     <div class="carousel-caption d-none d-md-block">
