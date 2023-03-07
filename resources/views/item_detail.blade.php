@@ -12,7 +12,7 @@
             <div class="col">
                 <div class="row">
                     <h1>{{ $items->name }}</h1>
-                    <p class="fs-4">Starts from <small><b>Rp {{ $items->bid_price }}</b></small></p>
+                    <p class="fs-4">Starts from <small><b>Rp {{ number_format($items->bid_price, 2, ',', '.') }}</b></small></p>
                     <p class="fs-4 mb-5">Auction will be closed
                         @if ($rule == 0)
                             : today
@@ -48,7 +48,7 @@
                         <td>{{ $loop->iteration }}</td>
                         {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
                         <td>{{ $auction->user->name ?? 'No one has done any bid'}}</td>
-                        <td>{{ $auction->sold_price ?? ''}}</td>
+                        <td>Rp {{ number_format($auction->sold_price , 0, ',', '.') ?? ''}}</td>
                     </tr>
                     @endforeach
                     @foreach ($histories->sortByDesc('bid_amount') as $history)
@@ -56,7 +56,7 @@
                         <td>{{ $loop->iteration+1 }}</td>
                         {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
                         <td>{{ $history->user->name }}</td>
-                        <td>{{ $history->bid_amount}}</td>
+                        <td>Rp {{ number_format($history->bid_amount , 2, ',', '.') }}</td>
                     </tr>
                     @endforeach
                 @else

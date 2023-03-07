@@ -23,8 +23,8 @@
                     @foreach ($auctionsOpen as $auction)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $auction->item->name}}</td>
-                            <td>{{ $auction->sold_price}}</td>
+                            <td>{{ $auction->item->name }}</td>
+                            <td>{{ number_format($auction->sold_price, 2, ',', '.') }}</td>
                             <td>
                                 <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
                             </td>
@@ -35,8 +35,8 @@
                         @foreach ($auctionHistoriesOpen as $history)
                             <tr>
                                 <td>{{ $loop->iteration+1 }}</td>
-                                <td>{{ $history->auction->item->name}}</td>
-                                <td>{{ $history->bid_amount}}</td>
+                                <td>{{ $history->auction->item->name }}</td>
+                                <td>{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
                                 <td>
                                     <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
                                 </td>
@@ -71,8 +71,8 @@
                     @foreach ($auctionsClosed as $auction)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $auction->item->name}}</td>
-                            <td>{{ $auction->sold_price}}</td>
+                            <td>{{ $auction->item->name }}</td>
+                            <td>{{ number_format($auction->sold_price, 2, ',', '.') }}</td>
                             <td>
                                 {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
                                 <p>Win</p>
@@ -84,8 +84,8 @@
                         @foreach ($auctionHistoriesClosed as $history)
                             <tr>
                                 <td>{{ $loop->iteration+1 }}</td>
-                                <td>{{ $history->auction->item->name}}</td>
-                                <td>{{ $history->bid_amount}}</td>
+                                <td>{{ $history->auction->item->name }}</td>
+                                <td>{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
                                 <td>
                                     {{-- <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
                                     <p>Lose</p>

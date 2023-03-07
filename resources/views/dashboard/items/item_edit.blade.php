@@ -41,8 +41,8 @@
     <label for="inputDesc" class="form-label">Item Desciption</label>
     <textarea class="form-control" name="desc" id="inputDesc" rows="5">{{ $item->desc }}</textarea>
   </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-dark">Create</button>
+  <div class="col-12 mb-3">
+    <button type="submit" class="btn btn-dark float-end">Create</button>
   </div>
 </form>
 

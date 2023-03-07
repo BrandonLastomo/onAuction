@@ -18,6 +18,8 @@
             <tr>
               <th scope="col">No.</th>
               <th scope="col">Name</th>
+              <th scope="col">Bid Price</th>
+              <th scope="col">Category</th>
               <th scope="col">Action</th>
             </tr>
           </thead>
@@ -28,6 +30,8 @@
                 <td>{{ $loop->iteration }}</td>
                 {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
                 <td>{{ $item->name }}</td>
+                <td>Rp {{ number_format($item->bid_price, 2, '.', ',') }}</td>
+                <td>{{ $item->category->name }}</td>
                 <td>
                     <a href="/dashboard/items/{{ $item->slug }}" class="btn btn-success">Detail</a> 
                     <a href="/dashboard/items/{{ $item->slug }}/edit" class="btn btn-warning">Edit</a>

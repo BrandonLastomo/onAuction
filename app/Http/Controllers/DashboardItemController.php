@@ -23,7 +23,7 @@ class DashboardItemController extends Controller
         return view('dashboard.items.index', [
             'title' => 'items',
             'active' => 'items',
-            'items' => Item::all(),
+            'items' => Item::all()->load('category'),
             'auctions' => Auction::all()
         ]);
     }

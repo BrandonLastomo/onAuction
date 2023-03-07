@@ -8,7 +8,7 @@
       </div>
     @endif
 
-    <div class="pt-3 pb-2 mb-3 border-bottom">
+    <div class="pt-3 pb-2 mb-2 border-bottom">
         <h1 class="h2">Hello, {{ auth()->user()->name }}</h1>
     </div>
 
@@ -17,7 +17,7 @@
       <button class="btn btn-dark" type="submit">Search</button>
     </form> --}}
     
-    <h4>These are our web's brief data</h4>
+    <h4 class="pb-3">These are our web's brief data</h4>
     <div class="row mb-3">
       <div class="col-sm-3">
         <div class="card">
@@ -78,8 +78,8 @@
           <tr>
               <td>{{ $loop->iteration }}</td>
               <td>{{ $auction->item->name }}</td>
-              <td>Rp {{ $auction->item->bid_price }}</td>
-              <td>Rp {{ $auction->sold_price }}</td>
+              <td>Rp {{ number_format($auction->item->bid_price, 2, ',', '.') }}</td>
+              <td>Rp {{ number_format($auction->sold_price, 2, ',', '.') }}</td>
               <td>{{ $auction->user->name ?? 'NULL' }}</td>
               <td>{{ $auction->status }}</td>
               <td>
