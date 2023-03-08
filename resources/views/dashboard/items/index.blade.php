@@ -4,7 +4,8 @@
 
 @if (session()->has('success'))
 <div class="alert alert-success alert-dismissible fade show" role="alert">
-{{ session('success') }}
+  {{ session('success') }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 
@@ -34,7 +35,7 @@
                 <td>Rp {{ number_format($item->bid_price, 2, '.', ',') }}</td>
                 <td>{{ $item->category->name }}</td>
                 <td>
-                    <a href="/dashboard/items/{{ $item->slug }}" class="btn btn-success">Detail</a> 
+                    <a href="/dashboard/items/{{ $item->slug }}" class="btn btn-brown">Detail</a> 
                     <a href="/dashboard/items/{{ $item->slug }}/edit" class="btn btn-warning">Edit</a>
                     <form action="/dashboard/items/{{ $item->slug }}" method="post" class="d-inline">
                         @csrf

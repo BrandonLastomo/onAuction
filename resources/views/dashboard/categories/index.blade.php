@@ -74,48 +74,6 @@
                 <td>{{ $category->name }}</td>
                 <td><img src="{{ asset('storage/' . $category->image) }}" class="rounded" style="width: 50%"></td>
                 <td>
-                    {{-- <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editCategory">
-                        Edit
-                      </button>
-
-                      <!-- Modal -->
-                      <div class="modal fade" id="editCategory" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Category's Name</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                              <div class="col-lg-8">
-                                <form action="/dashboard/categories/{{ $category->slug }}" method="POST" enctype="multipart/form-data">
-                                    @method('put')
-                                    @csrf
-                                    <div class="mb-3">
-                                      <input type="text" name="id" value="{{ $category->id }}">
-                                      <label for="name" class="form-label">Name</label>
-                                      <input type="text" class="form-control @error('name') is-invalid @enderror" 
-                                      id="name" name="name" value="{{ $category->name }}" required autofocus>
-                                      @error('name')
-                                        <div class="invalid-feedback">
-                                          {{ $message }}
-                                        </div>
-                                      @enderror
-                                    </div>          
-                                    <div class="mb-3">
-                                      <label for="inputImage" class="form-label">Item Image</label>
-                                      <input class="form-control" type="file" name="image" id="inputImage">
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="modal-footer">
-                                  <button type="submit" class="btn btn-dark">Edit</button>
-                                </form>
-                            </div>
-                          </div>
-                        </div>
-                      </div> --}}
                     <a href="/dashboard/categories/{{ $category->slug }}/edit" class="btn btn-warning">Edit</a>
                     <form action="/dashboard/categories/{{ $category->slug }}" method="post" class="d-inline">
                         @csrf

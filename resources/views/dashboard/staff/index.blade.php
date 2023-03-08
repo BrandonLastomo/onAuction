@@ -3,8 +3,9 @@
 @section('container')
 
 @if (session()->has('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-{{ session('success') }}
+<div class="alert alert-success alert-dismissible fade show col-lg-6" role="alert">
+  {{ session('success') }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 @endif
 
@@ -13,7 +14,7 @@
     <hr class="border-2 border-top border-secondary mb-4">
     
     @can('admin')
-      <a href="/dashboard/staff/create" class="btn btn-dark mb-3">Tambah Petugas</a>
+      <a href="/dashboard/staff/create" class="btn btn-dark mb-3">Add Staff</a>
     @endcan
     
         <div class="table-responsive col-lg-12">
@@ -42,7 +43,7 @@
                 <td>{{ $staff->role }}</td>
                 @can('admin')
                   <td>
-                      <a href="/dashboard/staff/{{ $staff->username}}" class="btn btn-success">Detail</a> 
+                      <a href="/dashboard/staff/{{ $staff->username}}" class="btn btn-brown">Detail</a> 
                       <a href="/dashboard/staff/{{ $staff->username}}/edit" class="btn btn-warning">Edit</a>
                       <form action="/dashboard/staff/{{ $staff->username}}" method="post" class="d-inline">
                           @csrf

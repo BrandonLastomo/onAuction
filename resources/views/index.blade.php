@@ -98,7 +98,7 @@
                         {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-dark">Item Detail</a> --}}
                         @auth
                           @cannot('rakyat')
-                            <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-dark">Edit</a>  
+                            <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-warning">Edit</a>  
                           @endcannot
                         @endauth
                     </div>
@@ -145,10 +145,10 @@
                   <div class="card-body">
                       <h5 class="card-title fw-bold">{{ $auction->item->name }}</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="/{{ $auction->item->slug }}" class="btn btn-dark">Item Detail</a>
+                      <a href="/{{ $auction->item->slug }}" class="btn btn-brown">Item Detail</a>
                       @auth
                         @cannot('rakyat')
-                          <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-dark">Edit</a>  
+                          <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-warning">Edit</a>  
                         @endcannot
                       @endauth
                   </div>
@@ -161,7 +161,7 @@
       <hr class="border-2 border-top border-secondary mb-4">
 
       {{-- Categories Section --}}
-      <h4 class="mb-4 fw-bold">Browse by Category <a href="/categories" class="text-decoration-none"><span class="fs-6 ps-3">See More...</span></a></h4>
+      <h4 class="mb-4 fw-bold">Browse by Category <a href="/categories" class="text-decoration-none"><span class="text-brown fs-6 ps-3">See More...</span></a></h4>
         <div class="row">
           
           @foreach ($categories as $category)   

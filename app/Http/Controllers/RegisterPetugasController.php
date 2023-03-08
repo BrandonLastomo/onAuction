@@ -28,7 +28,7 @@ class RegisterPetugasController extends Controller
     public function create(){
         return view('dashboard.staff.register', [
             'title' => 'add',
-            'active' => 'add'
+            'active' => 'staff'
         ]);
     }
 
@@ -44,7 +44,7 @@ class RegisterPetugasController extends Controller
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],
             'phone_number' => 'required|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5|max:255',
+            'password' => 'required|min:8|max:255',
             'role' => 'required'
         ]);
 
