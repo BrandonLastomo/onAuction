@@ -8,19 +8,18 @@
       </div>
     @endif
 
-    <div class="pt-3 pb-2 mb-2 border-bottom">
-        <h1 class="h2">Hello, {{ auth()->user()->name }}</h1>
-    </div>
+<div class="mt-4">
+      <h3 class="mb-3">These are Our Web's Brief Datas</h3>
+      <hr class="border-2 border-top border-secondary mb-4">
 
     {{-- <form action="" class="mb-2">
       <input type="text" name="search" class="py-1 px-5">
       <button class="btn btn-dark" type="submit">Search</button>
     </form> --}}
     
-    <h4 class="pb-3">These are our web's brief data</h4>
-    <div class="row mb-3">
+    <div class="row mb-4">
       <div class="col-sm-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title pb-3">Current Auctions: {{ $countAuction }}</h5>
             {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
@@ -29,7 +28,7 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title pb-3">Items: {{ $countItem }}</h5>
             {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
@@ -38,7 +37,7 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title pb-3">Categories: {{ $countCategory }}</h5>
             {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
@@ -47,7 +46,7 @@
         </div>
       </div>
       <div class="col-sm-3">
-        <div class="card">
+        <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="card-title pb-3">Staffs: {{ $countStaff }}</h5>
             {{-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> --}}
@@ -57,11 +56,11 @@
       </div>
     </div>
 
-    <h4>This is ongoing auctions list</h4>
+    <h4 class="pb-3">This is ongoing auctions list</h4>
     <div class="table-responsive col-lg-12">
       {{-- <a href="/dashboard/categories/create" class="btn btn-dark mb-3 py-2">Create new category</a> --}}
       <table class="table table-striped table-sm">
-        <thead>
+        <thead class="table-dark">
           <tr>
             <th scope="col">No.</th>
             <th scope="col">Item Name</th>
@@ -106,5 +105,5 @@
         </tbody>
       </table>
     </div>
-
+</div>
 @endsection

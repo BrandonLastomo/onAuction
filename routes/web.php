@@ -27,30 +27,32 @@ use App\Http\Controllers\RegisterPetugasController;
 |
 */
 
-Route::get('/login', [LoginController::class, 'index'])->middleware('guest');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authenticate']);
 Route::post('/logout', [LoginController::class, 'logout']);
-
-
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store']);
 
-Route::get('/mybid', [HomeController::class, 'mybid']);
+Route::middleware('role: rakyat', 'auth')->group(function(){
+    Route::get('/mybid', [HomeController::class, 'mybid']);
+    Route::get('/{item:slug}/bidStore', [AuctionController::class, 'bidStore']);
+});
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::resource('/dashboard/staff', RegisterPetugasController::class);
-
-Route::resource('/dashboard/items', DashboardItemController::class);
-Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
-Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
-Route::get('/dashboard/{item:slug}/deleteAuction', [AuctionController::class, 'deleteAuction']);
-Route::resource('/dashboard/categories', DashboardCategoryController::class);
-Route::get('/dashboard/{item:slug}', [DashboardController::class, 'show']);
+Route::middleware('role: admin, petugas', 'auth')->group(function(){
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::resource('/dashboard/staff', RegisterPetugasController::class);
+    Route::resource('/dashboard/items', DashboardItemController::class);
+    Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
+    Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
+    Route::resource('/dashboard/categories', DashboardCategoryController::class);
+    Route::get('/dashboard/{item:slug}', [DashboardController::class, 'show']);
+    Route::get('/{item:slug}/generate-report', [HomeController::class, 'generateReport']);
+    Route::get('/dashboard/{item:slug}/deleteAuction', [AuctionController::class, 'deleteAuction']);
+});
 
 Route::get('/', [HomeController::class, "index"]);
 Route::get('/categories', [CategoryController::class, "index"]);
 Route::get('/categories/{category:slug}', [CategoryController::class, "categoryItems"]);
 Route::get('/{item:slug}', [AuctionController::class, 'autoCloseAuction']);
 Route::get('/{item:slug}', [HomeController::class, 'show'])->name('item_detail');
-Route::get('/{item:slug}/bidStore', [AuctionController::class, 'bidStore']);
-Route::get('/{item:slug}/generate-report', [HomeController::class, 'generateReport']);
+

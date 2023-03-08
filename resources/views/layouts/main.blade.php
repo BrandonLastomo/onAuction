@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="shortcut icon" href="{{ asset('img/favicon/favicon.ico') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
     
     <title>{{ $title }}</title>
@@ -14,7 +15,7 @@
 
     @include('partials.navbar')
 
-    <div style="margin-top: 90px">
+    <div style="margin-top: 80px">
         @yield('contents')
     </div>
 

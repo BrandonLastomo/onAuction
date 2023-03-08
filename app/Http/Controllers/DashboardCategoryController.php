@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 
@@ -31,7 +32,8 @@ class DashboardCategoryController extends Controller
     public function create(){
         return view('dashboard.categories.create', [
             'title' => 'categories',
-            'active' => 'categories'
+            'active' => 'categories',
+            'category' => Category::all()
         ]);
     }
 
@@ -48,8 +50,9 @@ class DashboardCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'slug' => 'required|unique:categories'
-            // nama key diambil dari nama tag
         ]);
+
+        $validatedData['image'] = $request->file('image')->store('category-images');
 
         Category::create($validatedData);
         return redirect('/dashboard/categories')->with('success', 'A new category has been added');
@@ -72,9 +75,12 @@ class DashboardCategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
-    {
-        //
+    public function edit(Category $category){
+        return view('dashboard.categories.category_edit', [
+            'title' => 'edit',
+            'active' => 'edit',
+            'category' => $category
+        ]);
     }
 
     /**
@@ -88,6 +94,11 @@ class DashboardCategoryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required'
         ]);
+
+        if ($category->image != null) {
+            Storage::delete($category->image);
+        }
+        $validatedData['image'] = $request->file('image')->store('category-images');
         
         Category::where('id', $category->id)->update($validatedData);
         return redirect('/dashboard/categories')->with('success', 'A category has been updated');

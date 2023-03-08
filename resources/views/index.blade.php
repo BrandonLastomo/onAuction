@@ -4,11 +4,9 @@
 
   <div class="container mb-5">
     
-    <h4>{{ $pageIn }}</h4>
-  
-  @php($count = $auctions->count())
-
-  @if ($count >= 3)
+    @if ($countAuctions > 3)
+    
+    <h4 class="fw-bold">{{ $pageIn }}</h4>
         
     {{-- Carousel --}}
     <div id="carouselExampleCaptions" class="carousel slide mb-4" data-bs-ride="false">
@@ -24,8 +22,8 @@
               <form action="/{{ $auctions[0]->item->slug }}" method="POST">
                 @method('get')
                 <input type="hidden" name="item_id" value="{{ $auctions[0]->item->id }}">
-                  <button type="submit" class="border-0 p-0">
-                    <img src="https://source.unsplash.com/1200x300?furniture" class="d-block w-100">
+                  <button type="submit" class="p-0 border-0 rounded">
+                    <img src="{{ asset('img/furniture_edit.jpg') }}" class="d-block w-100 rounded">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>{{ $auctions[0]->item->name }}</h5>
                       <p>Some representative placeholder content for the second slide.</p>
@@ -41,8 +39,8 @@
               <form action="/{{ $auctions[1]->item->slug }}" method="POST">
                 @method('GET')
                 <input type="hidden" name="item_id" value="{{ $auctions[1]->item->id }}">
-                  <button type="submit" class="border-0 p-0">
-                    <img src="https://source.unsplash.com/1200x300?furniture" class="d-block w-100">
+                  <button type="submit" class="p-0 border-0 rounded">
+                    <img src="{{ asset('img/furniture_edit.jpg') }}" class="d-block w-100 rounded">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>{{ $auctions[1]->item->name }}</h5>
                       <p>Some representative placeholder content for the second slide.</p>
@@ -57,8 +55,8 @@
               <form action="/{{ $auctions[2]->item->slug }}" method="POST">
                 @method('GET')
                 <input type="hidden" name="item_id" value="{{ $auctions[2]->item->id }}">
-                  <button type="submit" class="border-0 p-0">
-                    <img src="https://source.unsplash.com/1200x300?furniture" class="d-block w-100">
+                  <button type="submit" class="p-0 border-0 rounded">
+                    <img src="{{ asset('img/furniture_edit.jpg') }}" class="d-block w-100 rounded">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>{{ $auctions[2]->item->name }}</h5>
                       <p>Some representative placeholder content for the second slide.</p>
@@ -78,46 +76,65 @@
         </button>
     </div>
 
-    <hr>
-
     {{-- Items list --}}
-    <div class="container mt-4"> 
-      
-      <h4 class="mb-3">Title</h4>
-        <div class="row">
+    
+      <div class="rounded shadow-sm p-3">
+        <h4 class="mb-3 fw-bold">Maybe You Need These</h4>
+          <div class="row">
 
-            {{-- Item Card --}}
-            @foreach ($auctions->skip(3) as $auction)
-              <div class="col-md-3">
-                <div class="card shadow mb-5">
-                  <img src="{{ asset('storage/' . $auction->item->image) }}" class="card-img-top img-fluid">
-                  <div class="card-body">
-                      <h5 class="card-title">{{ $auction->item->name }}</h5>
-                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <form action="/{{ $auction->item->slug }}" method="GET" class="d-inline">
-                        <input type="hidden" name="item_id" value="{{ $auction->item->id }}">
-                        <button type="submit" class="btn btn-dark">Item Detail</button>
-                      </form>
-                      {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-dark">Item Detail</a> --}}
-                      @auth
-                        @cannot('rakyat')
-                          <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-dark">Edit</a>  
-                        @endcannot
-                      @endauth
+              {{-- Item Card --}}
+              @foreach ($auctions->skip(3)->take(4) as $auction)
+                <div class="col-md-3">
+                  <div class="card shadow-sm mb-5">
+                    <img src="{{ asset('storage/' . $auction->item->image) }}" class="card-img-top img-fluid">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $auction->item->name }}</h5>
+                        <h5 class="card-title fw-bold">Rp{{ number_format($auction->item->bid_price, 2, ',', '.') }}</h2>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <form action="/{{ $auction->item->slug }}" method="GET" class="d-inline">
+                          <input type="hidden" name="item_id" value="{{ $auction->item->id }}">
+                          <button type="submit" class="btn btn-dark">Item Detail</button>
+                        </form>
+                        {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-dark">Item Detail</a> --}}
+                        @auth
+                          @cannot('rakyat')
+                            <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-dark">Edit</a>  
+                          @endcannot
+                        @endauth
+                    </div>
                   </div>
                 </div>
+              @endforeach
+
+          </div>
+      </div>
+
+      <hr class="border-2 border-top border-secondary mb-4">
+
+      {{-- Categories Section --}}
+      <h4 class="mb-4 fw-bold">Browse by Category <a href="/categories" class="text-decoration-none"><span class="fs-6 ps-3">See More...</span></a></h4>
+        <div class="row">
+          
+          @foreach ($categories as $category)   
+          <div class="col-md-4 mb-3">
+              <a href="/categories/{{ $category->slug }}">
+              <div class="card text-bg-dark">
+                  <img src="{{ asset('storage/' . $category->image) }}" class="card-img" style="height: 125px">
+                  <div class="card-img-overlay p-0 d-flex justify-content-center bg-dark bg-opacity-50">  
+                      <h5 class="card-title px-5 py-5">{{ $category->name }}</h5>
+                  </div>
               </div>
-            @endforeach
+              </a>
+          </div>   
+          @endforeach
 
         </div>
 
-    </div>
-
-  @elseif ($count < 3)
+  @elseif ($countAuctions <= 3)
           {{-- Items list --}}
     <div class="container mt-3"> 
       
-      <h3 class="mb-3">Title</h3>
+      <h3 class="mb-3 fw-bold"> Title</h3>
         <div class="row">
 
             {{-- Item Card --}}
@@ -126,7 +143,7 @@
                 <div class="card shadow mb-5">
                   <img src="https://source.unsplash.com/400x400?furniture" class="card-img-top">
                   <div class="card-body">
-                      <h5 class="card-title">{{ $auction->item->name }}</h5>
+                      <h5 class="card-title fw-bold">{{ $auction->item->name }}</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                       <a href="/{{ $auction->item->slug }}" class="btn btn-dark">Item Detail</a>
                       @auth
@@ -138,6 +155,27 @@
                 </div>
               </div>
             @endforeach
+
+        </div>
+        
+      <hr class="border-2 border-top border-secondary mb-4">
+
+      {{-- Categories Section --}}
+      <h4 class="mb-4 fw-bold">Browse by Category <a href="/categories" class="text-decoration-none"><span class="fs-6 ps-3">See More...</span></a></h4>
+        <div class="row">
+          
+          @foreach ($categories as $category)   
+          <div class="col-md-4 mb-3">
+              <a href="/categories/{{ $category->slug }}">
+              <div class="card text-bg-dark">
+                  <img src="{{ asset('storage/' . $category->image) }}" class="card-img" style="height: 125px">
+                  <div class="card-img-overlay p-0 d-flex justify-content-center bg-dark bg-opacity-50">  
+                      <h5 class="card-title px-5 py-5">{{ $category->name }}</h5>
+                  </div>
+              </div>
+              </a>
+          </div>   
+          @endforeach
 
         </div>
 
@@ -157,25 +195,25 @@
           
           <div class="row mt-3">
             
-            <div class="col-md-3 col-lg-4 col-xl-3 mb-4">
+            <div class="col-md-3 col-lg-4 col-xl-3 mt-5">
               <!-- Content -->
-              <h6 class="mb-4">
-                <b>onAuction</b> 
-              </h6>
-              <p>
+              <h1>
+                <b><a href="/" class="text-decoration-none text-dark">onAuction</a></b> 
+              </h1>
+              {{-- <p>
                 Here you can use rows and columns to organize your footer content. Lorem ipsum
                 dolor sit amet, consectetur adipisicing elit.
-              </p>
+              </p> --}}
             </div>
             
 
             
             <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
               
-              <h6 class="fw-bold mb-4">CONTACT</h6>
-              <p>Karawang, Indonesia</p>
-              <p>onauction@gmail.com</p>
-              <p>+62 888 8888 8888</p>
+              <h5 class="fw-bold mb-4">CONTACT</h5>
+              <p><i class="bi bi-geo-alt pe-1"></i> Karawang, Indonesia</p>
+              <p><i class="bi bi-envelope-at pe-1"></i> onauction@gmail.com</p>
+              <p><i class="bi bi-telephone pe-1"></i> +62 888 8888 8888</p>
             </div>
           </div>
         </div>

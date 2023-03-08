@@ -1,4 +1,11 @@
+@font-face {
+  font-family: gt-walsheim;
+  src: url(../font/gt-walsheim/GTWalsheimPro-Light.ttf);
+}
 
+body {
+  font-family: gt-walsheim, sans-serif;
+}
 
 .form-signin .form-floating:focus-within {
     z-index: 2;

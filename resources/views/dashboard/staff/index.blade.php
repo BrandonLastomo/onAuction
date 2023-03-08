@@ -10,14 +10,15 @@
 
   <div class="mt-4">
     <h3 class="mb-3">Staff List</h3>
-    <hr>
+    <hr class="border-2 border-top border-secondary mb-4">
+    
     @can('admin')
       <a href="/dashboard/staff/create" class="btn btn-dark mb-3">Tambah Petugas</a>
     @endcan
     
         <div class="table-responsive col-lg-12">
         <table class="table table-striped table-sm">
-          <thead>
+          <thead class="table-dark">
             <tr>
               <th scope="col">No.</th>
               <th scope="col">Name</th>

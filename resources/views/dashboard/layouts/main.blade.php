@@ -8,6 +8,7 @@
     <title>Laravel Baron | Dashboard</title>
 
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('img/favicon/favicon.ico') }}">
 
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">

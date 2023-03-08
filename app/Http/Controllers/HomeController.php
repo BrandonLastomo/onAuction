@@ -6,6 +6,7 @@ use App\Models\Auction;
 use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\AuctionHistory;
+use App\Models\Category;
 use Barryvdh\DomPDF\Facade\pdf as PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,9 @@ class HomeController extends Controller{
             'title' => "home",
             'pageIn' => "Latest Auction",
             'active' => 'home',
-            'auctions' => Auction::all()->load('item')
+            'auctions' => Auction::all()->load('item'),
+            'categories' => Category::all()->take(3),
+            'countAuctions' => Auction::all()->count()
         ]);
     }
 

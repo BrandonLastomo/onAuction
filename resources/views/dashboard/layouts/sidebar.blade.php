@@ -30,7 +30,7 @@
             </li>
             {{-- @can('admin') --}}
             <li class="nav-item">
-              <a class="nav-link {{ Request::is('add-petugas') ? 'active' : ''}}" aria-current="page" href="/dashboard/staff">
+              <a class="nav-link {{ Request::is('dashboard/staff') ? 'active' : ''}}" aria-current="page" href="/dashboard/staff">
                 <i class="bi bi-person"></i>
                 Staff List
               </a>
