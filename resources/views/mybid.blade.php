@@ -5,102 +5,112 @@
 
 <div class="container mb-5">
 
-    <h4>Your Latest Auction</h4>
-    <div class="table-responsive mb-3">
-        <table class="table border table-sm">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Amount of Bid</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{-- {{ $countAuctionsOpen }}    --}}
-                {{-- @if ($countAuctions > 0 OR $countAuctionHistories > 0 ) --}}
-                @if ($countAuctionsOpen > 0)
-                    @foreach ($auctionsOpen as $auction)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $auction->item->name }}</td>
-                            <td>{{ number_format($auction->sold_price, 2, ',', '.') }}</td>
-                            <td>
-                                <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
-                            </td>
-                        </tr>
-                    @endforeach
-                @elseif ($countAuctionHistoriesOpen > 0)
-                    {{-- @if ($auctions->status == 'Open') --}}
-                        @foreach ($auctionHistoriesOpen as $history)
+    {{-- Ongoing Auction --}}
+    <div class="rounded shadow p-3 mb-5">
+
+        <h4>Your Latest Auction</h4>
+        <div class="table-responsive mb-3">
+            <table class="table border table-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount of Bid</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- {{ $countAuctionsOpen }}    --}}
+                    {{-- @if ($countAuctions > 0 OR $countAuctionHistories > 0 ) --}}
+                    @if ($countAuctionsOpen > 0)
+                        @foreach ($auctionsOpen as $auction)
                             <tr>
-                                <td>{{ $loop->iteration+1 }}</td>
-                                <td>{{ $history->auction->item->name }}</td>
-                                <td>{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $auction->item->name }}</td>
+                                <td>Rp{{ number_format($auction->sold_price, 2, ',', '.') }}</td>
                                 <td>
-                                    <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
+                                    <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
                                 </td>
                             </tr>
                         @endforeach
-                    {{-- @endif --}}
-                @else
-                    <tr>
-                        <td>You are not in any auction right now.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-    </div>
-
-
-    <h4>Bid History</h4>
-    <div class="table-responsive">
-        <table class="table border table-sm">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Amount of Bid</th>
-                    <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {{ $countAuctionsClosed }}   
-                @if ($countAuctionsClosed > 0 OR $countAuctionHistoriesClosed > 0)
-                {{-- @if ($countAuctions > 0) --}}
-                    @foreach ($auctionsClosed as $auction)
+                    @elseif ($countAuctionHistoriesOpen > 0)
+                        {{-- @if ($auctions->status == 'Open') --}}
+                            @foreach ($auctionHistoriesOpen as $history)
+                                <tr>
+                                    <td>{{ $loop->iteration+1 }}</td>
+                                    <td>{{ $history->auction->item->name }}</td>
+                                    <td>Rp{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
+                                    <td>
+                                        <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        {{-- @endif --}}
+                    @else
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $auction->item->name }}</td>
-                            <td>{{ number_format($auction->sold_price, 2, ',', '.') }}</td>
-                            <td>
-                                {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
-                                <p>Win</p>
-                            </td>
+                            <td>You are not in any auction right now.</td>
                         </tr>
-                    @endforeach
-                {{-- @elseif ($countAuctionHistories > 0) --}}
-                    {{-- @if ($auctions->status == 'Open') --}}
-                        @foreach ($auctionHistoriesClosed as $history)
+                    @endif
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    {{-- End of Ongoing Auction --}}
+
+    {{-- Bid History --}}
+    <div class="rounded shadow p-3 mb-5">
+    
+        <h4>Bid History</h4>
+        <div class="table-responsive">
+            <table class="table border table-sm">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount of Bid</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>  
+                    @if ($countAuctionsClosed > 0 OR $countAuctionHistoriesClosed > 0)
+                    {{-- @if ($countAuctions > 0) --}}
+                        @foreach ($auctionsClosed as $auction)
                             <tr>
-                                <td>{{ $loop->iteration+1 }}</td>
-                                <td>{{ $history->auction->item->name }}</td>
-                                <td>{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $auction->item->name }}</td>
+                                <td>Rp{{ number_format($auction->sold_price, 2, ',', '.') }}</td>
                                 <td>
-                                    {{-- <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
-                                    <p>Lose</p>
+                                    {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
+                                    <p>Win</p>
                                 </td>
                             </tr>
                         @endforeach
-                    {{-- @endif --}}
-                @else
-                    <tr>
-                        <td>You haven't done any bid yet.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+                    {{-- @elseif ($countAuctionHistories > 0) --}}
+                        {{-- @if ($auctions->status == 'Open') --}}
+                            @foreach ($auctionHistoriesClosed as $history)
+                                <tr>
+                                    <td>{{ $loop->iteration+1 }}</td>
+                                    <td>{{ $history->auction->item->name }}</td>
+                                    <td>Rp{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
+                                    <td>
+                                        {{-- <a href="/{{ $history->auction->item->slug }}" class="btn btn-success">Go to Item Detail Page</a> --}}
+                                        <p>Lose</p>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        {{-- @endif --}}
+                    @else
+                        <tr>
+                            <td>You haven't done any bid yet.</td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
+    {{-- End of Bid History --}}
+    
 </div>
 
     <!-- Footer -->
