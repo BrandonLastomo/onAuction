@@ -50,12 +50,13 @@ class DashboardItemController extends Controller
     public function store(StoreItemRequest $request){
         
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
             'category_id' => 'required',
-            'bid_price' => 'required',
+            'bid_price' => 'required|numeric',
             'desc' => 'required'
             // nama key diambil dari nama tag
         ]);
+
         $validatedData['slug'] = Str::slug($request->name);
         $validatedData['image'] = $request->file('image')->store('item-images');
 
@@ -101,9 +102,9 @@ class DashboardItemController extends Controller
      */
     public function update(UpdateItemRequest $request, Item $item){
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:255',
             'category_id' => 'required',
-            'bid_price' => 'required',
+            'bid_price' => 'required|numeric',
             'desc' => 'required'
         ]);
 

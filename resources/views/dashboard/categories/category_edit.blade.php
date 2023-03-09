@@ -10,8 +10,13 @@
   @csrf
   @method('put')
   <div class="col-md-6">
-    <label for="inputName" class="form-label">Name</label>
-    <input type="text" class="form-control" name="name" id="inputName" value="{{ $category->name }}" autofocus>
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control @error('slug') is-invalid @enderror" name="name" id="name" value="{{ $category->name }}" autofocus>  
+    @error('name')
+      <div class="invalid-feedback">
+          {{ $message }}
+      </div>
+    @enderror 
   </div>
   <div class="col-md-6">
     <label for="inputImage" class="form-label">Category Image</label>

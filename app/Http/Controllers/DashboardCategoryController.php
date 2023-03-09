@@ -92,7 +92,7 @@ class DashboardCategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category){
         $validatedData = $request->validate([
-            'name' => 'required'
+            'name' => 'required|max:255'
         ]);
 
         if ($category->image != null) {

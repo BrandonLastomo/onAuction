@@ -8,32 +8,57 @@
 
 <form action="/dashboard/items" method="POST" class="row g-3" enctype="multipart/form-data">
   @csrf
+
   <div class="col-md-6">
     <label for="inputName" class="form-label">Name</label>
-    <input type="text" class="form-control" name="name" id="inputName" autofocus>
+    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputName" autofocus>    
+    @error('name')
+      <div class="invalid-feedback">
+          {{ $message }}
+      </div>
+    @enderror
   </div>
+
   <div class="col-md-6">
-    <label for="inputPrice" class="form-label">Bid Price</label>
+    <label for="price" class="form-label">Bid Price</label>
     <div class="input-group">
       <span class="input-group-text text-light bg-dark border-dark">Rp</span>
-      <input type="number" class="form-control" name="bid_price" id="input_price">
-    </div>
+      <input type="number" class="form-control @error('price') is-invalid @enderror" name="bid_price" id="price">
+    </div>    
+    @error('price')
+      <div class="invalid-feedback">
+          {{ $message }}
+      </div>
+    @enderror
   </div>
+
   <div class="col-12">
-    <label for="inputCategory" class="form-label">Category</label>
-    <select id="inputCategory" class="form-select" name="category_id">
+    <label for="category" class="form-label">Category</label>
+    <select id="category" class="form-select @error('category') is-invalid @enderror" name="category_id">
       @foreach ($categories as $category)
         <option value="{{ $category->id }}">{{ $category->name }}</option>
       @endforeach
-    </select>
+    </select>    
+    @error('category')
+      <div class="invalid-feedback">
+          {{ $message }}
+      </div>
+    @enderror
   </div>
+
   <div class="col-12">
-    <label for="inputImage" class="form-label">Item Image</label>
-    <input class="form-control" type="file" name="image" id="inputImage">
+    <label for="image" class="form-label">Item Image</label>
+    <input class="form-control" type="file" name="image" id="image">    
   </div>
+
   <div class="col-12">
-    <label for="inputDesc" class="form-label">Item Desciption</label>
-    <textarea class="form-control" name="desc" id="inputDesc" rows="5"></textarea>
+    <label for="desc" class="form-label">Item Desciption</label>
+    <textarea class="form-control @error('desc') is-invalid @enderror" name="desc" id="desc" rows="5"></textarea>    
+    @error('desc')
+      <div class="invalid-feedback">
+          {{ $message }}
+      </div>
+    @enderror
   </div>
   <div class="col-12">
     <button type="submit" class="btn btn-dark">Create</button>
