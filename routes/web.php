@@ -14,7 +14,7 @@ use App\Http\Controllers\AuctionController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\RegisterPetugasController;
+use App\Http\Controllers\RegisterStaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,14 +36,14 @@ Route::post('/logout', [LoginController::class, 'logout']);
     Route::post('/register', [RegisterController::class, 'store']);
 
 
-Route::middleware(['role:rakyat', 'auth'])->group(function(){
+Route::middleware(['role:citizen', 'auth'])->group(function(){
     Route::get('/mybid', [HomeController::class, 'mybid']);
     Route::get('/{item:slug}/bidStore', [AuctionController::class, 'bidStore']);
 });
 
-Route::middleware(['role:admin,petugas', 'auth'])->group(function(){
+Route::middleware(['role:admin,staff', 'auth'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index']);
-    Route::resource('/dashboard/staff', RegisterPetugasController::class);
+    Route::resource('/dashboard/staff', RegisterStaffController::class);
     Route::resource('/dashboard/items', DashboardItemController::class);
     Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
     Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);

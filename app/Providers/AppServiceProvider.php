@@ -29,12 +29,12 @@ class AppServiceProvider extends ServiceProvider
             return $user->role == 'admin';
         });
 
-        Gate::define('petugas', function(User $user){
-            return $user->role == 'petugas';
+        Gate::define('staff', function(User $user){
+            return $user->role == 'staff';
         });
         
-        Gate::define('rakyat', function(User $user){
-            return $user->role == 'rakyat';
+        Gate::define('citizen', function(User $user){
+            return $user->role == 'citizen';
         });
 
         // paginate

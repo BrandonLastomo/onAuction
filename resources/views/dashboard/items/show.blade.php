@@ -16,7 +16,7 @@
                 </form>
                 
 
-                @can('petugas')
+                @can('staff')
 
                 @if ($item->auction?->status == 'Open')
                   <form action="/dashboard/closeAuction" method="GET">

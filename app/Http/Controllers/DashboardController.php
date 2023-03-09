@@ -12,7 +12,7 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller{
     public function index(){
-        // if(!auth()->check() || auth()->user()->role == "rakyat"){
+        // if(!auth()->check() || auth()->user()->role == "citizen"){
         //     return redirect()->intended('/');
         // }
 
@@ -22,7 +22,7 @@ class DashboardController extends Controller{
             'countAuction' => Auction::all()->load('item', 'user')->count(),
             'countItem' => Item::all()->count(),
             'countCategory' => Category::all()->count(),
-            'countStaff' => User::where('role', 'admin')->orWhere('role', 'petugas')->count()
+            'countStaff' => User::where('role', 'admin')->orWhere('role', 'staff')->count()
         ]);
     }
 
@@ -40,14 +40,14 @@ class DashboardController extends Controller{
         ]);
     }
 
-    public function viewTambahPetugas(){
+    public function addStaffView(){
         return view('dashboard.register', [
             'title' => 'add',
             'active' => 'add'
         ]);
     }
 
-    public function tambahPetugas(Request $request){
+    public function addStaff(Request $request){
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],

@@ -9,12 +9,12 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               @auth
-                  @cannot('rakyat')   
+                  @cannot('citizen')   
                     <li class="nav-item">
                       <a class="nav-link  {{ Request::is('/dashboard') ? 'active' : ''}}" href="/dashboard">Dashboard</a>
                     </li>
                   @endcannot
-                  @can('rakyat')
+                  @can('citizen')
                   <li class="nav-item">
                     <a class="nav-link {{ ($active === "mybid") ? 'active' : ''}}" href="/mybid">My Bid</a>
                   </li>

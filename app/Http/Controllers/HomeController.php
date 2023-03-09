@@ -19,8 +19,7 @@ class HomeController extends Controller{
             'title' => "home",
             'pageIn' => "Latest Auction",
             'active' => 'home',
-            'items' => Item::latest()->paginate(8),
-            // 'auctions' => Auction::all()->load('item'),
+            'auctions' => Auction::all()->load('item'),
             'categories' => Category::all()->take(3),
             'countAuctions' => Auction::all()->count()
         ]);

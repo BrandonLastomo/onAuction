@@ -22,7 +22,7 @@
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                       <a href="/{{ $auction->item->slug }}" class="btn btn-brown">Item Detail</a>
                       @auth
-                        @cannot('rakyat')
+                        @cannot('citizen')
                           <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-warning">Edit</a>  
                         @endcannot
                       @endauth

@@ -67,7 +67,7 @@
     @enderror
   </div>
   <div class="col-12 mb-3">
-    <button type="submit" class="btn btn-dark float-end">Create</button>
+    <button type="submit" class="btn btn-warning float-end">Edit</button>
   </div>
 </form>
 

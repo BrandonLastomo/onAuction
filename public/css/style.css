@@ -40,6 +40,10 @@ body {
   color: #7f5f5f;
 }
 
+.text-brown:active{
+  color: #7f5f5f;
+}
+
 .btn-brown{
   background-color: #9E7676;
   color: white;
@@ -47,6 +51,11 @@ body {
 }
 
 .btn-brown:hover{
+  background-color: #7f5f5f !important;
+  color: white !important;
+}
+
+.btn-brown:active{
   background-color: #7f5f5f !important;
   color: white !important;
 }
@@ -62,6 +71,11 @@ body {
   color: white !important;
 }
 
+.btn-green:active{
+  background-color: #4f6251 !important;
+  color: white !important;
+}
+
 .btn-red{
   background-color: #DF2E38;
   color: white;
@@ -69,6 +83,11 @@ body {
 }
 
 .btn-red:hover{
+  background-color: #914d4d !important;
+  color: white !important;
+}
+
+.btn-red:active{
   background-color: #914d4d !important;
   color: white !important;
 }

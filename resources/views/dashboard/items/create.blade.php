@@ -11,7 +11,7 @@
 
   <div class="col-md-6">
     <label for="inputName" class="form-label">Name</label>
-    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputName" autofocus>    
+    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="inputName" autofocus value="{{ old('name') }}">    
     @error('name')
       <div class="invalid-feedback">
           {{ $message }}
@@ -23,7 +23,7 @@
     <label for="price" class="form-label">Bid Price</label>
     <div class="input-group">
       <span class="input-group-text text-light bg-dark border-dark">Rp</span>
-      <input type="number" class="form-control @error('price') is-invalid @enderror" name="bid_price" id="price">
+      <input type="number" class="form-control @error('price') is-invalid @enderror" name="bid_price" id="price" value="{{ old('price') }}">
     </div>    
     @error('price')
       <div class="invalid-feedback">
@@ -53,15 +53,15 @@
 
   <div class="col-12">
     <label for="desc" class="form-label">Item Desciption</label>
-    <textarea class="form-control @error('desc') is-invalid @enderror" name="desc" id="desc" rows="5"></textarea>    
+    <textarea class="form-control @error('desc') is-invalid @enderror" name="desc" id="desc" rows="5">{{ old('desc') }}</textarea>    
     @error('desc')
       <div class="invalid-feedback">
           {{ $message }}
       </div>
     @enderror
   </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-dark">Create</button>
+  <div class="col-12 mb-3">
+    <button type="submit" class="btn btn-green float-end">Create</button>
   </div>
 </form>
 

@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'Baron',
             'email' => 'baron@gmail.com',
             'phone_number' => '0812 8888 8888',
-            'password' => bcrypt('999999'),
+            'password' => bcrypt('99999999'),
             'role' => "admin"
         ]);
         User::create([
@@ -32,15 +32,15 @@ class DatabaseSeeder extends Seeder
             'username' => 'NiitoL',
             'email' => 'baron2@gmail.com',
             'phone_number' => '0812 8988 8888',
-            'password' => bcrypt('111111'),
-            'role' => "petugas"
+            'password' => bcrypt('11111111'),
+            'role' => "staff"
         ]);
         User::create([
             'name' => 'Baron',
             'username' => 'Barong',
             'email' => 'baron3@gmail.com',
             'phone_number' => '0812 8898 8888',
-            'password' => bcrypt('000000')
+            'password' => bcrypt('00000000')
         ]);
         User::factory(2)->create();
 

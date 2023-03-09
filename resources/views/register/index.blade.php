@@ -72,11 +72,11 @@
                             </div>
                             
                             {{-- <label for="role">Select the role:</label> --}}
-                            <input type="hidden" name="role" value="rakyat">
+                            <input type="hidden" name="role" value="citizen">
                                 {{-- <select class="form-select border border-dark" id="role" name="role">
                                     <option selected>Select a role</option>
-                                    <option value="admin">petugas</option>
-                                    <option value="rakyat">rakyat</option>
+                                    <option value="admin">staff</option>
+                                    <option value="citizen">citizen</option>
                                 </select> --}}
 
                             <button name="register" class="w-100 btn btn-lg btn-dark mt-3" type="submit">Register</button>

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone_number')->unique();
-            $table->enum('role', ['admin', 'petugas', 'rakyat'])->default('rakyat');
+            $table->enum('role', ['admin', 'staff', 'citizen'])->default('citizen');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

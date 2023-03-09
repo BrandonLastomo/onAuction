@@ -10,7 +10,7 @@
         @csrf
         <div class="col-md-6">
             <label for="name" class="form-label @error('name') is-invalid @enderror">Name</label>
-            <input type="text" name="name" class="form-control" id="name" autofocus>
+            <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}" autofocus>
             @error('name')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6">
             <label for="username" class="form-label @error('username') is-invalid @enderror">Username</label>
-            <input type="text" name="username" class="form-control" id="username">
+            <input type="text" name="username" class="form-control" id="username" value="{{ old('username') }}">
             @error('username')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -30,7 +30,7 @@
             <label for="email" class="form-label @error('email') is-invalid @enderror">Email Address</label>
             <div class="input-group">
                 <span class="input-group-text text-light bg-dark border-dark">@</span>
-                <input type="email" name="email" class="form-control" id="email">
+                <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}">
             </div>
             @error('email')
                 <div class="invalid-feedback">
@@ -49,14 +49,14 @@
         </div>
         <div class="col-12">
             <label for="phone_number" class="form-label @error('phone_number') is-invalid @enderror">Phone Number</label>
-            <input type="text" name="phone_number" class="form-control" id="phone_number">
+            <input type="text" name="phone_number" class="form-control" id="phone_number" value="{{ old('phone_number') }}">
             @error('phone_number')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
             @enderror
         </div>
-        <input type="hidden" name="role" value="petugas">
+        <input type="hidden" name="role" value="staff">
         <div class="col-12">
             <button type="submit" class="btn btn-dark float-end">Add</button>
         </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 
-class RegisterPetugasController extends Controller
+class RegisterStaffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class RegisterPetugasController extends Controller
         return view('dashboard.staff.index', [
             'title' => 'staff',
             'active' => 'staff',
-            'staffs' => User::where('role', 'admin')->orWhere('role', 'petugas')->get()
+            'staffs' => User::where('role', 'admin')->orWhere('role', 'staff')->get()
         ]);
     }
 
@@ -43,7 +43,7 @@ class RegisterPetugasController extends Controller
             'name' => 'required|max:255',
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],
             'phone_number' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email:dns|unique:users',
             'password' => 'required|min:8|max:255',
             'role' => 'required'
         ]);

@@ -2,16 +2,16 @@
 
 @section('container')
 
-@if (session()->has('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ session('success') }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-
-  <div class="mt-4">
-    <h3 class="mb-3">Items List</h3>
-    <hr class="border-2 border-top border-secondary mb-4">
+<div class="mt-4">
+  <h3 class="mb-3">Items List</h3>
+  <hr class="border-2 border-top border-secondary mb-4">
+  
+  @if (session()->has('success'))
+    <div class="alert alert-success alert-dismissible fade show col-lg-6 float-end" role="alert">
+      {{ session('success') }}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  @endif
 
       <a href="/dashboard/items/create" class="btn btn-dark mb-3">Add new item</a>
         <div class="table-responsive col-lg-12">

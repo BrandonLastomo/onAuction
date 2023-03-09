@@ -92,7 +92,7 @@
 
                 {{-- Input Bid Price --}}
                 @auth
-                    @can('rakyat')
+                    @can('citizen')
                     <form action="/{{ $items->slug }}/bidStore" method="GET">
                             <input type="hidden" name="item_id" value="{{ $items->id }}">
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
@@ -117,7 +117,7 @@
 
                 {{-- Generate Report --}}
                 @auth
-                    @cannot('rakyat')
+                    @cannot('citizen')
                     <div class="d-flex justify-content-end">
                         <a href="/{{ $items->slug }}/generate-report" class="btn btn-dark" >Generate report</a>
                     </div>
@@ -147,7 +147,7 @@
                         </form>
                         {{-- <a href="/{{ $item->slug }}" class="btn btn-dark">Item Detail</a> --}}
                         @auth
-                          @cannot('rakyat')
+                          @cannot('citizen')
                             <a href="/dashboard/items/{{ $item->slug }}/edit" class="btn btn-warning">Edit</a>  
                           @endcannot
                         @endauth

@@ -70,7 +70,7 @@
         {{-- @if (old('role', $staff->role) == $staff->role) --}}
             <option value="admin" selected>admin</option>
         {{-- @else --}}
-            <option value="petugas">petugas</option>
+            <option value="staff">staff</option>
         {{-- @endif --}}
       {{-- @endforeach --}}
     </select>
