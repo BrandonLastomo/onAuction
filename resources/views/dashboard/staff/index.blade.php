@@ -14,49 +14,50 @@
       </div>
     @endif
     
-    @can('admin')
-      <a href="/dashboard/staff/create" class="btn btn-dark mb-3">Add Staff</a>
-    @endcan
-    
-        <div class="table-responsive col-lg-12">
-        <table class="table table-striped table-sm">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">No.</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Phone Number</th>
-              <th scope="col">Role</th>
-              @can('admin')
-                <th scope="col">Action</th>
-              @endcan
-            </tr>
-          </thead>
-          <tbody>
-            @foreach ($staffs as $staff)
-
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-                <td>{{ $staff->name }}</td>
-                <td>{{ $staff->email }}</td>
-                <td>{{ $staff->phone_number }}</td>
-                <td>{{ $staff->role }}</td>
+    <div class="rounded shadow p-3 mb-3">
+      @can('admin')
+        <a href="/dashboard/staff/create" class="btn btn-green mb-3">Add Staff</a>
+      @endcan
+      
+          <div class="table-responsive col-lg-12">
+          <table class="table table-striped table-sm">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">No.</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Role</th>
                 @can('admin')
-                  <td>
-                      <a href="/dashboard/staff/{{ $staff->username }}/edit" class="btn btn-warning">Edit</a>
-                      <form action="/dashboard/staff/{{ $staff->username }}" method="post" class="d-inline">
-                          @csrf
-                          @method('delete')
-                          <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                      </form>
-                  </td>
+                  <th scope="col">Action</th>
                 @endcan
-            </tr>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($staffs as $staff)
 
-            @endforeach
-          </tbody>
-        </table>
+              <tr>
+                  <td>{{ $loop->iteration }}</td>
+                  {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
+                  <td>{{ $staff->name }}</td>
+                  <td>{{ $staff->email }}</td>
+                  <td>{{ $staff->phone_number }}</td>
+                  <td>{{ $staff->role }}</td>
+                  @can('admin')
+                    <td>
+                        <a href="/dashboard/staff/{{ $staff->username }}/edit" class="btn btn-warning">Edit</a>
+                        <form action="/dashboard/staff/{{ $staff->username }}" method="post" class="d-inline">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </td>
+                  @endcan
+              </tr>
 
+              @endforeach
+            </tbody>
+          </table>
+    </div>
   </div>
 @endsection

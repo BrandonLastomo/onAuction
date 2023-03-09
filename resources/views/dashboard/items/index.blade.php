@@ -13,7 +13,9 @@
     </div>
   @endif
 
-      <a href="/dashboard/items/create" class="btn btn-dark mb-3">Add new item</a>
+  <div class="rounded shadow p-3 mb-3">
+    
+      <a href="/dashboard/items/create" class="btn btn-green mb-3">Add new item</a>
         <div class="table-responsive col-lg-12">
         <table class="table table-striped table-sm">
           <thead class="table-dark">
@@ -48,6 +50,6 @@
             @endforeach
           </tbody>
         </table>
-
   </div>
+</div>
 @endsection
