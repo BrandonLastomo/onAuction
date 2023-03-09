@@ -93,7 +93,7 @@
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         <form action="/{{ $auction->item->slug }}" method="GET" class="d-inline">
                           <input type="hidden" name="item_id" value="{{ $auction->item->id }}">
-                          <button type="submit" class="btn btn-dark">Item Detail</button>
+                          <button type="submit" class="btn btn-brown">Item Detail</button>
                         </form>
                         {{-- <a href="/{{ $auction->item->slug }}" class="btn btn-dark">Item Detail</a> --}}
                         @auth
@@ -112,7 +112,7 @@
       <hr class="border-2 border-top border-secondary mb-4">
 
       {{-- Categories Section --}}
-      <h4 class="mb-4 fw-bold">Browse by Category <a href="/categories" class="text-decoration-none"><span class="fs-6 ps-3">See More...</span></a></h4>
+      <h4 class="mb-4 fw-bold">Browse by Category <a href="/categories" class="text-decoration-none"><span class="text-brown fs-6 ps-3">See More...</span></a></h4>
         <div class="row">
           
           @foreach ($categories as $category)   
@@ -134,7 +134,7 @@
           {{-- Items list --}}
     <div class="container mt-3"> 
       
-      <h3 class="mb-3 fw-bold"> Title</h3>
+      <h3 class="mb-3 fw-bold"> Maybe You Need These </h3>
         <div class="row">
 
             {{-- Item Card --}}

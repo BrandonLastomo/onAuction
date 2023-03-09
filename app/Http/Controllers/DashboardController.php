@@ -12,9 +12,9 @@ use Carbon\Carbon;
 
 class DashboardController extends Controller{
     public function index(){
-        if(!auth()->check() || auth()->user()->role == "rakyat"){
-            return redirect()->intended('/');
-        }
+        // if(!auth()->check() || auth()->user()->role == "rakyat"){
+        //     return redirect()->intended('/');
+        // }
 
         return view('dashboard.index', [
             'title' => "Dashboard",

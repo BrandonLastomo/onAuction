@@ -43,9 +43,8 @@
                 <td>{{ $staff->role }}</td>
                 @can('admin')
                   <td>
-                      <a href="/dashboard/staff/{{ $staff->username}}" class="btn btn-brown">Detail</a> 
-                      <a href="/dashboard/staff/{{ $staff->username}}/edit" class="btn btn-warning">Edit</a>
-                      <form action="/dashboard/staff/{{ $staff->username}}" method="post" class="d-inline">
+                      <a href="/dashboard/staff/{{ $staff->username }}/edit" class="btn btn-warning">Edit</a>
+                      <form action="/dashboard/staff/{{ $staff->username }}" method="post" class="d-inline">
                           @csrf
                           @method('delete')
                           <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>

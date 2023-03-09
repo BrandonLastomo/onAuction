@@ -53,7 +53,7 @@
                     <button class="w-100 btn btn-lg btn-dark mb-1" type="submit">Login</button>
                     </form> 
                     <small class="d-block text-center mt-3">
-                        Not registered? <a href="/register">Register</a>
+                        Not registered? <a href="/register" class="text-decoration-none text-brown">Register</a>
                     </small>
                 </main>
             </div>

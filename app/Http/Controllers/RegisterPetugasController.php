@@ -72,9 +72,12 @@ class RegisterPetugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit(User $staff){
+        return view('dashboard.staff.staff_edit', [
+            'title' => 'edit',
+            'active' => 'edit',
+            'staff' => $staff
+        ]);
     }
 
     /**
@@ -84,9 +87,21 @@ class RegisterPetugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, User $staff){
+        $validatedData = $request->validate([
+            'name' => 'required|max:255',
+            'username' => ['required', 'min:3', 'max:255'],
+            'phone_number' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|min:8|max:255',
+            'role' => 'required'
+        ]);
+
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        User::where('id', $staff->id)->update($validatedData);
+        return redirect('/dashboard/staff')->with('success', 'A staff has been updated');
+
     }
 
     /**
@@ -95,8 +110,9 @@ class RegisterPetugasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(User $staff){
+        User::destroy($staff->id);
+        // tangkap slug yang dikirim, lalu cari idnya dan hapus
+        return redirect('/dashboard/staff')->with('success', 'A staff has been deleted');
     }
 }
