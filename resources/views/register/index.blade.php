@@ -82,7 +82,7 @@
                             <button name="register" class="w-100 btn btn-lg btn-dark mt-3" type="submit">Register</button>
                         </form>
                         <small class="d-block text-center mt-3">
-                            Already registered? <a href="/login">Login</a>
+                            Already registered? <a href="/login" class="text-decoration-none text-brown">Login</a>
                         </small>
                     </main>
                 </div>

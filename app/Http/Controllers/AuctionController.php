@@ -32,7 +32,7 @@ class AuctionController extends Controller{
 
     
     public function closeAuction(Request $request){
-        Auction::where('item_id', $request->item_id)->update(['status' => $request->status]);
+        Auction::where('id', $request->auction_id)->update(['status' => $request->status]);
         return redirect('/dashboard')->with('success', 'An auction has been closed');
     }
 
@@ -81,8 +81,8 @@ class AuctionController extends Controller{
             return redirect()->route('item_detail', ['item' => $item])->with('success', 'Open success');
     }
 
-    public function deleteAuction(Item $item){
-        Auction::destroy($item->auction->id);
+    public function deleteAuction(Auction $auction){
+        Auction::destroy($auction->id);
         return redirect('/dashboard')->with('success', 'An auction has been deleted');
     }
 }

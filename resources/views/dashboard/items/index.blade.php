@@ -33,7 +33,7 @@
                 {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
                 <td>{{ $item->name }}</td>
                 <td>Rp {{ number_format($item->bid_price, 2, '.', ',') }}</td>
-                <td>{{ $item->category->name }}</td>
+                <td>{{ $item->category->name ?? 'Category not found, edit item or add category immidiately' }}</td>
                 <td>
                     <a href="/dashboard/items/{{ $item->slug }}" class="btn btn-brown">Detail</a> 
                     <a href="/dashboard/items/{{ $item->slug }}/edit" class="btn btn-warning">Edit</a>

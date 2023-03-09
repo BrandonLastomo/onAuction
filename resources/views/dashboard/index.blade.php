@@ -2,13 +2,6 @@
 
 @section('container')
 
-@if (session()->has('success'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  {{ session('success') }}
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif
-
 <div class="mt-4">
       <h3 class="mb-3">These are Our Web's Brief Datas</h3>
       <hr class="border-2 border-top border-secondary mb-4">
@@ -57,8 +50,17 @@
       </div>
 </div>
 
-    <h4 class="pb-3">This is ongoing auctions list</h4>
-    <div class="table-responsive col-lg-12">
+  <div class="rounded shadow p-3">
+    <h4 class="d-inline">This is ongoing auctions list</h4>
+
+    @if (session()->has('success'))
+      <div class="alert alert-success alert-dismissible fade show float-end" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    @endif
+
+    <div class="table-responsive col-lg-12 pt-3">
       {{-- <a href="/dashboard/categories/create" class="btn btn-dark mb-3 py-2">Create new category</a> --}}
       <table class="table table-striped table-sm">
         <thead class="table-dark">
@@ -77,15 +79,15 @@
           @foreach ($auctions as $auction)
           <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $auction->item->name }}</td>
-              <td>Rp {{ number_format($auction->item->bid_price, 2, ',', '.') }}</td>
+              <td>{{ $auction->item->name ?? 'Item is unavalaible, please delete this auction immidiately' }}</td>
+              <td>Rp {{ number_format($auction->item->bid_price ?? 0, 2, ',', '.') }}</td>
               <td>Rp {{ number_format($auction->sold_price, 2, ',', '.') }}</td>
-              <td>{{ $auction->user->name ?? 'NULL' }}</td>
+              <td>{{ $auction->user->name ?? 'No one has done any bid' }}</td>
               <td>{{ $auction->status }}</td>
               <td>
                   <form action="/dashboard/closeAuction" method="GET" class="d-inline">
                     @csrf
-                    <input type="hidden" name="item_id" value="{{ $auction->item->id }}">
+                    <input type="hidden" name="auction_id" value="{{ $auction->id ?? '' }}">
                   @if ($auction->status == "Closed")
                     <input type="hidden" name="status" value="Open">
                     <button type="submit" class="btn btn-light border-dark">Open</button>
@@ -94,9 +96,10 @@
                     <button type="submit" class="btn btn-dark">Close</button>
                   @endif
                   </form>
-                  <a href="/dashboard/{{ $auction->item->slug }}" class="btn btn-brown">Detail</a>
-                  <form action="/dashboard/{{ $auction->item->slug }}/deleteAuction" method="GET" class="d-inline">
+                  <a href="/dashboard/{{ $auction->item->slug ?? '' }}" class="btn btn-brown">Detail</a>
+                  <form action="/dashboard/{{ $auction->id ?? '' }}/deleteAuction" method="GET" class="d-inline">
                       @csrf
+                      <input type="hidden" name="auction_id" value="{{ $auction->id }}">
                       <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
                   </form>
               </td>
@@ -106,5 +109,6 @@
         </tbody>
       </table>
     </div>
+  </div>
 </div>
 @endsection

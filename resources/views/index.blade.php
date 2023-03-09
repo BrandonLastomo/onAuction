@@ -144,15 +144,15 @@
                 <div class="card shadow mb-5">
                   <img src="https://source.unsplash.com/400x400?furniture" class="card-img-top">
                   <div class="card-body">
-                      <h5 class="card-title fw-bold">{{ $auction->item->name }}</h5>
+                      <h5 class="card-title fw-bold {{ $auction->item->name ?? 'text-danger' }} ">{{ $auction->item->name ?? 'Item is unavalaible' }}</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <form action="/{{ $auction->item->slug }}" method="GET" class="d-inline">
-                        <input type="hidden" name="item_id" value="{{ $auction->item->id }}">
-                        <button type="submit" class="btn btn-brown">Item Detail</button>
+                      <form action="/{{ $auction->item->slug ?? '' }}" method="GET" class="d-inline">
+                        <input type="hidden" name="item_id" value="{{ $auction->item->id ?? '' }}">
+                        <button type="submit" class="btn btn-brown {{ $auction->item->slug ?? 'btn-disabled' }}" >Item Detail</button>
                       </form>
                       @auth
                         @cannot('citizen')
-                          <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-warning">Edit</a>  
+                          <a href="/dashboard/items/{{ $auction->item->slug ?? '' }}/edit" class="btn btn-warning {{ $auction->item->slug ?? 'disabled' }}" >Edit</a>  
                         @endcannot
                       @endauth
                   </div>

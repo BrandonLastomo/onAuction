@@ -110,3 +110,14 @@ body {
     background-color: #9E7676;
     border-color: #9E7676;
 }
+
+a.disabled{
+  pointer-events: none;
+  cursor: default;
+}
+
+.btn-disabled{
+  pointer-events: none;
+  cursor: default;
+  color: lightgray;
+}
