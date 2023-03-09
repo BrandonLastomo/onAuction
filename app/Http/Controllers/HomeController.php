@@ -43,6 +43,7 @@ class HomeController extends Controller{
                     // 'ends_at' => $item->auction->created_at->addDays($item->auction->ends_in),
                     'diff' => $item->auction->created_at->diff($item->auction->created_at->addDays($item->auction->ends_in))->format("%d days %h hours %i minutes"),
                     'items' => $item->load('auction'),
+                    'moreItems' => Item::all()->take(4),
                     // 'auctions' => Auction::all()->load('user')
                     'auctions' => Auction::where('item_id', $item->id)->get(),
                     'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')
@@ -60,6 +61,7 @@ class HomeController extends Controller{
                     // 'ends_at' => $item->auction->created_at->addDays($item->auction->ends_in),
                     // 'diff' => $item->auction->created_at->diff($item->auction->created_at->addDays($item->auction->ends_in))->format("%d days %h hours %i minutes"),
                     'items' => $item->load('auction'),
+                    'moreItems' => Item::all()->take(4),
                     // 'auctions' => Auction::all()->load('user')
                     'auctions' => Auction::where('item_id', $item->id)->get(),
                     'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')

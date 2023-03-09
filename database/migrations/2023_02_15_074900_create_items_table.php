@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             // $table->timestamp('tgl')->nullable();
             $table->double('bid_price');
-            $table->string('image')->nullable();
+            $table->string('image')->nullable()->default('item-images/imgnotfound.jpg');
             $table->string('desc');
             $table->timestamps();
         });

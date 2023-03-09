@@ -81,7 +81,7 @@
       <div class="rounded shadow-sm p-3">
         <h4 class="mb-3 fw-bold">Maybe You Need These</h4>
           <div class="row">
-
+            
               {{-- Item Card --}}
               @foreach ($auctions->skip(3)->take(4) as $auction)
                 <div class="col-md-3">
@@ -131,6 +131,7 @@
         </div>
 
   @elseif ($countAuctions <= 3)
+  
           {{-- Items list --}}
     <div class="container mt-3"> 
       
@@ -145,7 +146,10 @@
                   <div class="card-body">
                       <h5 class="card-title fw-bold">{{ $auction->item->name }}</h5>
                       <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                      <a href="/{{ $auction->item->slug }}" class="btn btn-brown">Item Detail</a>
+                      <form action="/{{ $auction->item->slug }}" method="GET" class="d-inline">
+                        <input type="hidden" name="item_id" value="{{ $auction->item->id }}">
+                        <button type="submit" class="btn btn-brown">Item Detail</button>
+                      </form>
                       @auth
                         @cannot('rakyat')
                           <a href="/dashboard/items/{{ $auction->item->slug }}/edit" class="btn btn-warning">Edit</a>  
