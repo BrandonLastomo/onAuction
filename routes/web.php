@@ -45,12 +45,15 @@ Route::middleware(['role:admin,staff', 'auth'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::resource('/dashboard/staff', RegisterStaffController::class);
     Route::resource('/dashboard/items', DashboardItemController::class);
-    Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
-    Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
     Route::resource('/dashboard/categories', DashboardCategoryController::class);
     Route::get('/dashboard/{item:slug}', [DashboardController::class, 'show']);
     Route::get('/{item:slug}/generate-report', [HomeController::class, 'generateReport']);
-    Route::get('/dashboard/{item:slug}/deleteAuction', [AuctionController::class, 'deleteAuction']);
+    Route::get('/dashboard/{auction:id}/deleteAuction', [AuctionController::class, 'deleteAuction']);
+});
+
+Route::middleware(['role:staff', 'auth'])->group(function(){
+    Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
+    Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
 });
 
 Route::get('/', [HomeController::class, "index"]);
