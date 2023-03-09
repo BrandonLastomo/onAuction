@@ -27,8 +27,14 @@
       } 
 
       th{
-        background-color: black;
-        color: white
+        background-color: #9E7676;
+        color: white;
+        text-align: left;
+        border: 1px solid black
+      }
+
+      .reportTitle{
+        margin-top: 0px
       }
 
       .itemDataTitle{
@@ -51,17 +57,43 @@
         margin: 50px 0px 25px 0px 
       }
 
+      .leaderboard{
+        border: 1px solid black;
+        border-spacing: 0px;
+        width: 100%;
+        margin-bottom: 30px
+      }
+
       .tableNumber{
         width: 0px;
-        align-content: left
+        align-content: left;
+        border: 1px solid black
+      }
+
+      .bidder{
+        border: 1px solid black
+      }
+
+      .bidAmount{
+        border: 1px solid black
+      }
+
+      .signature{
+        float: right
+      }
+
+      .acknowledged, .by{
+        font-weight: normal
+      }
+
+      .acknowledged{
+        margin-bottom: 120px
       }
 
     </style>
-    
-
-    <div class="container mt-3">
-    onAuction
-    </div>
+    <center>
+      <h1 class="reportTitle">{{ $items->name ?? 'Unavalaible item' }}'s Report</h1>
+    </center>
 
     <hr>
       <table>
@@ -79,17 +111,17 @@
           <td class="itemData">{{ $items->name }}</td>
           <td class="UserDataTitle">Sold at</td>
           <td class="itemDataColon">:</td>
-          <td>{{ $items->auction->sold_price ?? 'No one has done any bid'}}</td>
+          <td>Rp{{ number_format($items->auction->sold_price ?? '', 2, ',', '.') }}</td>
         </tr>
         <tr>
           <td class="itemDataTitle">Category</td>
           <td class="itemDataColon">:</td>
-          <td class="itemData">{{ $items->category->name }}</td>
+          <td class="itemData">{{ $items->category->name ?? "This item's category has been deleted or edited" }}</td>
         </tr>
         <tr>
           <td class="itemDataTitle">Start Price</td>
           <td class="itemDataColon">:</td>
-          <td class="itemData">{{ $items->bid_price }}</td>
+          <td class="itemData">Rp{{ number_format($items->bid_price ?? '', 2, ',', '.') }}</td>
         </tr>
         <tr>
           <td class="itemDataTitle">Item Description</td>
@@ -115,7 +147,7 @@
       <h4 class="leaderboardTitle">Leaderboard of {{ $items->name }}'s Auction</h4>
     </center>
     
-      <table>
+      <table class="leaderboard">
           <tr>
             <th class="tableNumber">No.</th>
             <th>Name</th>
@@ -125,19 +157,25 @@
           <tr>
               <td class="tableNumber">{{ $loop->iteration }}</td>
               {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-              <td>{{ $auction->user->name ?? 'Be the first to bid!'}}</td>
-              <td>{{ $auction->sold_price ?? ''}}</td>
+              <td class="bidder">{{ $auction->user->name ?? 'No one has done any bid'}}</td>
+              <td class="bidAmount">Rp{{ number_format($auction->sold_price ?? '', 2, ',', '.')}}</td>
           </tr>
           @endforeach
           @foreach ($histories->sortByDesc('bid_amount') as $history)
           <tr>
-              <td>{{ $loop->iteration+1 }}</td>
+              <td class="tableNumber">{{ $loop->iteration+1 }}</td>
               {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-              <td>{{ $history->user->name }}</td>
-              <td>{{ $history->bid_amount}}</td>
+              <td class="bidder">{{ $history->user->name }}</td>
+              <td class="bidAmount">Rp{{ number_format($history->bid_amount ?? '', 2, ',', '.')}}</td>
           </tr>
           @endforeach
       </table>
 
-</body>
+      <div class="signature">
+        <center>
+          <h3 class="acknowledged">Acknowledged by,</h3>
+          <h3 class="by">(.....................)</h3>
+        </center>
+      </div>
+  </body>
 </html>
