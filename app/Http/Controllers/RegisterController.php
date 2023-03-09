@@ -20,7 +20,7 @@ class RegisterController extends Controller{
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],
             'phone_number' => 'required|min:10|unique:users',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|max:255',
+            'password' => ['required', 'min:8', 'max:255', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!$#%]).*$/'],
             'role' => 'required'
         ]);
 

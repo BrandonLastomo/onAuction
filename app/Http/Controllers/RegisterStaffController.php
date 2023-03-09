@@ -44,7 +44,9 @@ class RegisterStaffController extends Controller
             'username' => ['required', 'min:3', 'max:255', 'unique:users'],
             'phone_number' => 'required|unique:users',
             'email' => 'required|email:dns|unique:users',
-            'password' => 'required|min:8|max:255',
+            // fullpack of regex rule for password:
+            // 'password' => ['required', 'min:8', 'max:255', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\x])(?=.*[!$#%]).*$/'],
+            'password' => ['required', 'min:8', 'max:255', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!$#%]).*$/'],
             'role' => 'required'
         ]);
 
