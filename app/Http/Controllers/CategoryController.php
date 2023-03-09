@@ -16,12 +16,13 @@ class CategoryController extends Controller{
     }
 
     public function categoryItems(Category $category) {
-        return view('index', [
+        return view('items_in_category', [
             'title' => "$category->name Page",
-            'pageIn' => "Latest $category->name Auction",
+            'pageIn' => "Items in $category->name",
             'active' => 'categories',
             'items' => $category->item,
-            'auctions' => Auction::all()->where('status', 'open')->load('item')
+            'auctions' => Auction::all()->load('item'),
+            'countAuctions' => Auction::all()->count()
         ]);
     }
 }
