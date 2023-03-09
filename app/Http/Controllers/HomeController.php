@@ -19,7 +19,8 @@ class HomeController extends Controller{
             'title' => "home",
             'pageIn' => "Latest Auction",
             'active' => 'home',
-            'auctions' => Auction::all()->load('item'),
+            'items' => Item::latest()->paginate(8),
+            // 'auctions' => Auction::all()->load('item'),
             'categories' => Category::all()->take(3),
             'countAuctions' => Auction::all()->count()
         ]);
@@ -132,6 +133,22 @@ class HomeController extends Controller{
             'chroot'  => asset('storage/')
         ])->setPaper('a4', 'landscape');
         return $pdf->download($item->name . ' Report.pdf');
+    }
+
+    public function search(Request $request) {
+        if ($request->has('search')) {
+            $items = Item::where('name', 'LIKE', '%'.$request->input('search').'%')->get();
+            $items_id = $items->pluck('id')->toArray();
+            $auctions = Auction::latest()->whereIn('item_id',$items_id)->paginate(24);
+        }
+        else {
+            $auctions = Auction::latest()->paginate(24);
+        }
+
+        return view('pages.auctions',[
+            'auctions' => $auctions,
+            'title' => 'All Auctions',
+        ]);
     }
     
 }
