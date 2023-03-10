@@ -14,15 +14,17 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller{
     public function index(){
+    $categories = Category::all()->take(3);
+    $countAuctions = Auction::count();
 
         return view('index', [
             'title' => "home",
             'pageIn' => "Latest Auction",
             'active' => 'home',
             'auctions' => Auction::all()->load('item'),
-            'categories' => Category::all()->take(3),
-            'countAuctions' => Auction::all()->count()
-        ]);
+            'categories' => $categories,
+            'countAuctions' => $countAuctions,
+        ])->with('congrats', 'you won a bid!');
     }
 
     public function show(Item $item, Request $request){
@@ -41,12 +43,18 @@ class HomeController extends Controller{
                     'rule' => Carbon::now()->diffInDays($item->auction->created_at->addDays($item->auction->ends_in)),
 
                     // 'ends_at' => $item->auction->created_at->addDays($item->auction->ends_in),
-                    'diff' => $item->auction->created_at->diff($item->auction->created_at->addDays($item->auction->ends_in))->format("%d days %h hours %i minutes"),
+                    // 'diff' => $item->auction->created_at->diff($item->auction->created_at->addDays($item->auction->ends_in))->format("%d days %h hours %i minutes"),
                     'items' => $item->load('auction'),
                     'moreItems' => Auction::all()->take(4),
                     // 'auctions' => Auction::all()->load('user')
-                    'auctions' => Auction::where('item_id', $item->id)->get(),
+                    'auctions' => Auction::where('item_id', $item->id)->get()->load('history'),
+                        // 'histories' => AuctionHistory::where('auction_id', $item->auction->id)
+                        //                 ->whereNotIn('bid_amount', [0.0])->get()->load('user')
+                        // 'histories' => AuctionHistory::where('bid_amount', '>', 0.0)->where('auction_id', $item->auction->id)
+                        // ->get()
+                        // ->load('user', 'history')
                     'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')
+                        
                 ]);
             }
 
@@ -61,10 +69,12 @@ class HomeController extends Controller{
                     // 'ends_at' => $item->auction->created_at->addDays($item->auction->ends_in),
                     // 'diff' => $item->auction->created_at->diff($item->auction->created_at->addDays($item->auction->ends_in))->format("%d days %h hours %i minutes"),
                     'items' => $item->load('auction'),
-                    'moreItems' => Auction::all()->take(4),
+                    'moreItems' => Auction::all()->load('item')->take(4),
+                    'moreItemsCount' => Auction::where('status', 'Open')->take(4)->count(),
                     // 'auctions' => Auction::all()->load('user')
-                    'auctions' => Auction::where('item_id', $item->id)->get(),
-                    'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')
+                    'auctions' => Auction::where('item_id', $item->id)->get()->load('history'),
+                    'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')->sortDesc(),
+                    'user_id' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')->sortDesc()->skip(1)
                 ]);
             }
     }
@@ -136,18 +146,32 @@ class HomeController extends Controller{
 
     public function search(Request $request) {
         if ($request->has('search')) {
-            $items = Item::where('name', 'LIKE', '%'.$request->input('search').'%')->get();
-            $items_id = $items->pluck('id')->toArray();
-            $auctions = Auction::latest()->whereIn('item_id',$items_id)->paginate(24);
+            $auctions = Auction::whereHas('item', function ($query) use ($request) {
+                $query->where('name', 'LIKE', '%'. $request->input('search') .'%');
+            })
+            ->latest()
+            ->paginate(8); // or any other number of results per page
+        
+        
+            // $items = Item::where('name', 'LIKE', '%'. $request->input('search') .'%')->get();
+            // $items_id = $items->pluck('id')->toArray();
+            // $auctions = Auction::latest()->whereIn('item_id', $items_id);
         }
         else {
-            $auctions = Auction::latest()->paginate(24);
+            // $auctions = Auction::latest();
+            $auctions = Auction::with('item')->latest()->paginate(7);
         }
 
-        return view('pages.auctions',[
+        return view('index',[
+            'auctionAsCondition' => Auction::all()->sortDesc()->first(),
             'auctions' => $auctions,
-            'title' => 'All Auctions',
-        ]);
+            'title' => "home",
+            'success' => 'you won a bid!',
+            'pageIn' => "Latest Auction",
+            'active' => 'home',
+            'categories' => Category::all()->take(3),
+            'countAuctions' => Auction::all()->count()
+        ])->with('success', 'you won a bid!');
     }
     
 }
