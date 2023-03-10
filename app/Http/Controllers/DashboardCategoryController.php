@@ -18,7 +18,7 @@ class DashboardCategoryController extends Controller
      */
     public function index(){
         return view('dashboard.categories.index', [
-            'title' => 'categories',
+            'title' => 'onAuction | Categories',
             'active' => 'categories',
             'categories' => Category::all()
         ]);
@@ -77,7 +77,7 @@ class DashboardCategoryController extends Controller
      */
     public function edit(Category $category){
         return view('dashboard.categories.category_edit', [
-            'title' => 'edit',
+            'title' => 'onAuction | Edit Category',
             'active' => 'edit',
             'category' => $category
         ]);

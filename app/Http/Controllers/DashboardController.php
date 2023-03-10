@@ -15,10 +15,12 @@ class DashboardController extends Controller{
         // if(!auth()->check() || auth()->user()->role == "citizen"){
         //     return redirect()->intended('/');
         // }
+        $auctions = Auction::with('item', 'user')->latest()->paginate(3);
 
         return view('dashboard.index', [
-            'title' => "Dashboard",
-            'auctions' => Auction::all()->load('item', 'user'),
+            'title' => "onAuction | Dashboard",
+            // 'auctions' => Auction::all()->load('item', 'user'),
+            'auctions' => $auctions,
             'countAuction' => Auction::all()->load('item', 'user')->count(),
             'countItem' => Item::all()->count(),
             'countCategory' => Category::all()->count(),
@@ -28,12 +30,13 @@ class DashboardController extends Controller{
 
     public function show(Item $item){
         return view('item_detail', [
-            'title' => "Detail",
+            'title' => "onAuction | Item Detail",
             'active' => 'home',
             // 'end' => '2023-03-02 00:00:00',
             // 'diff' => $item->auction->created_at->diff($item->auction->created_at->addDays($item->auction->ends_in))->format("%d days %h hours %i minutes"),
             'rule' => Carbon::now()->diffInDays($item->auction->created_at->addDays($item->auction->ends_in)),
             'items' => $item->load('auction'),
+            'moreItems' => Auction::all()->take(4),
             // 'auctions' => Auction::all()->load('user')
             'auctions' => Auction::where('item_id', $item->id)->get(),
             'histories' => AuctionHistory::where('auction_id', $item->auction->id)->get()->load('user')
