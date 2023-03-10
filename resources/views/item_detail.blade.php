@@ -6,6 +6,8 @@
 
     <div class="container">
 
+        {{-- {{ dd($histories) }} --}}
+
         {{-- Item Data --}}
         <div class="row mb-3">
             <div class="col-md-5">
@@ -35,7 +37,22 @@
         {{-- Leaderboard --}}
         <div class="rounded shadow p-3 mb-5">
                 <h3 class="ms-2">Auction Leaderboard</h3>
-                
+                @if (session()->has('failed'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('failed') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif (session()->has('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif (session()->has('tooLow'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('tooLow') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
                 <div class="table-responsive">
                     <table class="table border">
                     <thead class="table-dark">
@@ -53,7 +70,7 @@
                                 <td>{{ $loop->iteration }}</td>
                                 {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
                                 <td>{{ $auction->user->name ?? 'No one has done any bid'}}</td>
-                                <td>Rp{{ number_format($auction->sold_price , 0, ',', '.') ?? '' }}</td>
+                                <td>Rp{{ number_format($auction->sold_price  ?? '', 0, ',', '.') }}</td>
                                 <td>{{ $auction->user ? "Winner" : 'Undefined' }}</td>
                             </tr>
                             @endforeach
@@ -61,8 +78,8 @@
                             <tr>
                                 <td>{{ $loop->iteration+1 }}</td>
                                 {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-                                <td>{{ $history->user->name }}</td>
-                                <td>Rp{{ number_format($history->bid_amount , 2, ',', '.') }}</td>
+                                <td>{{ $history->user->name ?? 'No one has done any bid' }}</td>
+                                <td>Rp{{ number_format($history->bid_amount ?? '', 2, ',', '.') }}</td>
                                 <td>Lose</td>
                             </tr>
                             @endforeach
@@ -72,16 +89,16 @@
                             <td>{{ $loop->iteration }}</td>
                             {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
                             <td>{{ $auction->user->name ?? 'No one has done any bid'}}</td>
-                            <td>Rp{{ number_format($auction->sold_price, 2, ',', '.') ?? ''}}</td>
-                            <td>Winner</td>
+                            <td>Rp{{ number_format($auction->sold_price ?? '', 2, ',', '.') ?? ''}}</td>
+                            <td>{{ $auction->user ? "Winner" : 'Undefined' }}</td>
                         </tr>
                         @endforeach
                         @foreach ($histories->sortByDesc('bid_amount') as $history)
                         <tr>
                             <td>{{ $loop->iteration+1 }}</td>
                             {{-- variabel loop bisa dipake klo pake foreach, iteration berarti loop angka mulai dari angka 1, klo index berarti dari 0  (->index) --}}
-                            <td>{{ $history->user->name }}</td>
-                            <td>Rp{{ number_format($history->bid_amount, 2, ',', '.') }}</td>
+                            <td>{{ $history->user->name ?? 'No one has done any bid'}}</td>
+                            <td>Rp{{ number_format($history->bid_amount ?? '', 2, ',', '.') }}</td>
                             <td>Lose</td>
                         </tr>
                         @endforeach
@@ -96,10 +113,16 @@
                     <form action="/{{ $items->slug }}/bidStore" method="GET">
                             <input type="hidden" name="item_id" value="{{ $items->id }}">
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
-                        @foreach ($auctions as $auction)
+                            @foreach ($auctions as $auction)
                             <input type="hidden" name="auction_id" value="{{ $auction->id }}">
                             <input type="hidden" name="sold_price_old" value="{{ $auction->sold_price }}">
-                        @endforeach
+                            <input type="hidden" name="old_winner" value="{{ $auction->user->id }}">
+                            @endforeach
+                            @foreach ($histories->sortByDesc('user_id') as $history)
+                            <input type="hidden" name="other_bid" value="{{ $history->bid_amount ?? '' }}">
+                            {{-- {{ dd( $history->user->id) }} --}}
+                            <input type="hidden" name="old_bidder_id" value="{{ $history->user->id ?? '' }}">
+                            @endforeach
                         <div class="input-group mb-3">
                             <span class="input-group-text bg-dark text-light border-dark">Rp</span>
                         @if ($auction->status == "Open")
@@ -129,26 +152,27 @@
         <hr class="border-2 border-top border-secondary mb-4">
 
         {{-- More Items --}}
+        {{-- {{ dd($moreItemsCount) }} --}}
         <h4 class="mb-3 fw-bold">More Items</h4>
           <div class="row">
             
               {{-- Item Card --}}
-              @foreach ($moreItems as $item)
+              @foreach ($moreItems as $auctionItem)
                 <div class="col-md-3">
                   <div class="card shadow-sm mb-5">
-                    <img src="{{ asset('storage/' . $item->image) }}" class="card-img-top img-fluid">
+                    <img src="{{ asset('storage/' . $auctionItem->item->image ?? 'item-images/imgnotfound.jpg') }}" class="card-img-top img-fluid">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $item->name }}</h5>
-                        <h5 class="card-title fw-bold">Rp{{ number_format($item->bid_price, 2, ',', '.') }}</h2>
+                        <h5 class="card-title">{{ $auctionItem->item->name }}</h5>
+                        <h5 class="card-title fw-bold">Rp{{ number_format($auctionItem->item->bid_price, 2, ',', '.') }}</h2>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <form action="/{{ $item->slug }}" method="GET" class="d-inline">
-                          <input type="hidden" name="item_id" value="{{ $item->id }}">
+                        <form action="/{{ $auctionItem->item->slug }}" method="GET" class="d-inline">
+                          <input type="hidden" name="item_id" value="{{ $auctionItem->item->id }}">
                           <button type="submit" class="btn btn-brown">Item Detail</button>
                         </form>
-                        {{-- <a href="/{{ $item->slug }}" class="btn btn-dark">Item Detail</a> --}}
+                        {{-- <a href="/{{ $auctionItem->item->slug }}" class="btn btn-dark">Item Detail</a> --}}
                         @auth
                           @cannot('citizen')
-                            <a href="/dashboard/items/{{ $item->slug }}/edit" class="btn btn-warning">Edit</a>  
+                            <a href="/dashboard/items/{{ $auctionItem->item->slug }}/edit" class="btn btn-warning">Edit</a>  
                           @endcannot
                         @endauth
                     </div>
