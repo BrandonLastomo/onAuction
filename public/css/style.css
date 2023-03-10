@@ -44,6 +44,18 @@ body {
   color: #7f5f5f;
 }
 
+.text-green{
+  color: #5D9C59;
+}
+
+.text-green:hover{
+  color: #4f6251 !important;
+}
+
+.text-green:active{
+  color: #4f6251 !important;
+}
+
 .btn-brown{
   background-color: #9E7676;
   color: white;
