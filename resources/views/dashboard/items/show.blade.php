@@ -18,9 +18,9 @@
     </div>
   </div>
 
-    <a href="/dashboard/items" class="text-decoration-none btn btn-success">Back</a>
-    <a href="/dashboard/posts/{{ $item->name }}/edit" class="text-decoration-none btn btn-warning">Edit</a>
-    <form action="/dashboard/posts/{{ $item->id }}" method="post" class="d-inline">
+    <a href="/dashboard/items" class="text-decoration-none btn btn-brown">Back</a>
+    <a href="/dashboard/items/{{ $item->slug }}/edit" class="text-decoration-none btn btn-warning">Edit</a>
+    <form action="/dashboard/items/{{ $item->slug }}" method="post" class="d-inline">
         @csrf
         @method('delete')
         <button class="btn btn-danger">Delete</button>
@@ -31,15 +31,15 @@
       @can('staff')
 
       @if ($item->auction?->status == 'Open')
-        <form action="/dashboard/closeAuction" method="GET">
+        <form action="/dashboard/closeAuction" method="GET" class="d-inline">
           <input type="hidden" name="status" value="Closed">
-          <input type="hidden" name="item_id" value="{{ $item->id }}">
-          <button type="submit" class="btn btn-danger">Close</button>
+          <input type="hidden" name="item_id" value="{{ $item->slug }}">
+          <button type="submit" class="btn btn-dark">Close</button>
         </form>
         
       @else
       
-      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-light border-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Open Auction
       </button>
 
@@ -69,7 +69,7 @@
 
             <div class="modal-footer">
               {{-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> --}}
-              <button type="submit" class="btn btn-primary">Open</button>
+              <button type="submit" class="btn btn-light border-dark text-green">Open</button>
             </div>
           </div>
         </div>
