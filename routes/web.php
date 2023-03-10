@@ -40,7 +40,10 @@ Route::middleware(['role:citizen', 'auth'])->group(function(){
     Route::get('/mybid', [HomeController::class, 'mybid']);
     Route::get('/{item:slug}/bidStore', [AuctionController::class, 'bidStore']);
 });
-
+Route::middleware(['role:staff', 'auth'])->group(function(){
+    Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
+    Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
+});
 Route::middleware(['role:admin,staff', 'auth'])->group(function(){
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::resource('/dashboard/staff', RegisterStaffController::class);
@@ -51,12 +54,10 @@ Route::middleware(['role:admin,staff', 'auth'])->group(function(){
     Route::get('/dashboard/{auction:id}/deleteAuction', [AuctionController::class, 'deleteAuction']);
 });
 
-Route::middleware(['role:staff', 'auth'])->group(function(){
-    Route::get('/dashboard/items/{item:slug}/openAuction', [AuctionController::class, 'openAuction']);
-    Route::get('/dashboard/closeAuction', [AuctionController::class, 'closeAuction']);
-});
+
 
 Route::get('/', [HomeController::class, "index"]);
+Route::get('/', [HomeController::class, 'search']);
 Route::get('/categories', [CategoryController::class, "index"]);
 Route::get('/categories/{category:slug}', [CategoryController::class, "categoryItems"]);
 Route::get('/{item:slug}', [AuctionController::class, 'autoCloseAuction']);
