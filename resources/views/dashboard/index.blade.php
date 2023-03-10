@@ -107,8 +107,13 @@
           @endforeach
 
         </tbody>
+
+        
       </table>
+      {{ $auctions->links() }}
     </div>
   </div>
 </div>
+
+
 @endsection
