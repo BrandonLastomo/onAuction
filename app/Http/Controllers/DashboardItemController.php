@@ -128,7 +128,6 @@ class DashboardItemController extends Controller
     public function destroy(Item $item){
         
         Item::destroy($item->id);
-        // tangkap slug yang dikirim, lalu cari idnya dan hapus
         return redirect('/dashboard/items')->with('success', 'An item has been deleted');
     }
 }

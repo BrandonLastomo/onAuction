@@ -15,9 +15,9 @@
                     </li>
                   @endcannot
                   @can('citizen')
-                  <li class="nav-item">
-                    <a class="nav-link {{ ($active === "mybid") ? 'active' : ''}}" href="/mybid">My Bid</a>
-                  </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ ($active === "mybid") ? 'active' : ''}}" href="/mybid">My Bid</a>
+                    </li>
                   @endcan
               @endauth
               {{-- <li class="nav-item">
