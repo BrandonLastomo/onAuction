@@ -115,8 +115,8 @@
                             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                             @foreach ($auctions as $auction)
                             <input type="hidden" name="auction_id" value="{{ $auction->id }}">
-                            <input type="hidden" name="sold_price_old" value="{{ $auction->sold_price }}">
-                            <input type="hidden" name="old_winner" value="{{ $auction->user->id }}">
+                            <input type="hidden" name="sold_price_old" value="{{ $auction->sold_price ?? '' }}">
+                            <input type="hidden" name="old_winner" value="{{ $auction->user->id ?? '' }}">
                             @endforeach
                             @foreach ($histories->sortByDesc('user_id') as $history)
                             <input type="hidden" name="other_bid" value="{{ $history->bid_amount ?? '' }}">

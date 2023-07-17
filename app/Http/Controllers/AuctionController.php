@@ -33,8 +33,11 @@ class AuctionController extends Controller{
     
     public function closeAuction(Request $request){
         Auction::where('id', $request->auction_id)->update(['status' => $request->status]);
-        return redirect('/dashboard')->with('success', 'An auction has been closed');
-        
+        if ($request->status == 'Open') {
+            return redirect('/dashboard')->with('success', 'An auction has been opened');
+        } else {
+            return redirect('/dashboard')->with('success', 'An auction has been closed');
+        }
     }
 
     public function autoCloseAuction(Item $item){
@@ -73,7 +76,7 @@ class AuctionController extends Controller{
                 $oldBid['user_id'] = $request['user_id'];
             }
 
-            if ($newBid['bid_amount'] >= $item['bid_price']) {
+            if ($newBid['bid_amount'] > $item['bid_price']) {
 
                 if ($newBid['bid_amount'] == $request['other_bid'] || $newBid['bid_amount'] == $request['sold_price_old']){
                     return redirect()->route('item_detail', ['item' => $item])->with('failed', 'Bid failed, your bid must not be the same as other bid.');

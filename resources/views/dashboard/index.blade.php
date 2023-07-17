@@ -2,6 +2,7 @@
 
 @section('container')
 
+{{-- brief datas --}}
 <div class="mt-4">
       <h3 class="mb-3">These are Our Web's Brief Datas</h3>
       <hr class="border-2 border-top border-secondary mb-4">
@@ -85,6 +86,7 @@
               <td>{{ $auction->user->name ?? 'No one has done any bid' }}</td>
               <td>{{ $auction->status }}</td>
               <td>
+                @can('staff')
                   <form action="/dashboard/closeAuction" method="GET" class="d-inline">
                     @csrf
                     <input type="hidden" name="auction_id" value="{{ $auction->id ?? '' }}">
@@ -96,6 +98,7 @@
                     <button type="submit" class="btn btn-dark">Close</button>
                   @endif
                   </form>
+                @endcan
                   <a href="/dashboard/{{ $auction->item->slug ?? '' }}" class="btn btn-brown">Detail</a>
                   <form action="/dashboard/{{ $auction->id ?? '' }}/deleteAuction" method="GET" class="d-inline">
                       @csrf
